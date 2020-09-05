@@ -7,11 +7,11 @@ const data = require("../data/EURUSD.csv");
 const DataContainer = () => {
   const { dataStore } = useContext(rootStoreContext);
 
-  console.log(dataStore);
   const loadData = async () => {
     console.log("Hi");
     let csv = await d3.csv(data);
-    console.log(csv);
+    dataStore.rawData = csv;
+    dataStore.parseData();
   };
 
   return (

@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import DataContainer from "./containers/DataContainer";
 import "./App.css";
-import { rootStoreContext } from "./contexts";
 
 function App() {
   return (

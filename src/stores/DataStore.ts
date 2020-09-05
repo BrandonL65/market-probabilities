@@ -20,7 +20,12 @@ export class DataStore {
         this.totalDownDays++;
       }
     });
+  };
 
-    console.log(this.totalUpDays, this.totalDownDays, this.rawData.length);
+  reset = () => {
+    this.name = "";
+    this.rawData = [];
+    this.totalUpDays = 0;
+    this.totalDownDays = 0;
   };
 }

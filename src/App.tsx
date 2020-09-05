@@ -4,8 +4,6 @@ import "./App.css";
 import { rootStoreContext } from "./contexts";
 
 function App() {
-  const { dataStore } = useContext(rootStoreContext);
-
   return (
     <div className="App">
       <h1>Market Probabilities</h1>

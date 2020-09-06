@@ -8,7 +8,19 @@ const data = require("../data/EURUSD.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
-  const { totalUpDays, totalDownDays } = dataStore;
+  const { totalUpDays, totalDownDays, allCloseProbabilities } = dataStore;
+  const {
+    upOnePlus,
+    upSeventyFiveToOne,
+    upFiftyToSeventyFive,
+    upTwentyFiveToFifty,
+    upZeroToTwentyFive,
+    downZeroToTwentyFive,
+    downTwentyFiveToFifty,
+    downFiftyToSeventyFive,
+    downSeventyFiveToOne,
+    downOnePlus,
+  } = allCloseProbabilities;
 
   const loadData = async () => {
     dataStore.reset();
@@ -24,6 +36,16 @@ const DataContainer = observer(() => {
         totalBars={dataStore.rawData.length}
         totalUpDays={totalUpDays}
         totalDownDays={totalDownDays}
+        upOnePlus={upOnePlus}
+        upSeventyFiveToOne={upSeventyFiveToOne}
+        upFiftyToSeventyFive={upFiftyToSeventyFive}
+        upTwentyFiveToFifty={upTwentyFiveToFifty}
+        upZeroToTwentyFive={upZeroToTwentyFive}
+        downZeroToTwentyFive={downZeroToTwentyFive}
+        downTwentyFiveToFifty={downTwentyFiveToFifty}
+        downFiftyToSeventyFive={downFiftyToSeventyFive}
+        downSeventyFiveToOne={downSeventyFiveToOne}
+        downOnePlus={downOnePlus}
       />
     </div>
   );

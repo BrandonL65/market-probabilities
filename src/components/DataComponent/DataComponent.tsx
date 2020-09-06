@@ -6,11 +6,26 @@ interface DataComponentProps {
   totalBars: number;
   totalUpDays: number;
   totalDownDays: number;
+  upOnePlus: number;
+  upSeventyFiveToOne: number;
+  upFiftyToSeventyFive: number;
+  upTwentyFiveToFifty: number;
+  upZeroToTwentyFive: number;
 }
 
 const DataComponent = observer((props: DataComponentProps) => {
-  const { totalBars, totalUpDays, totalDownDays } = props;
+  const {
+    totalBars,
+    totalUpDays,
+    totalDownDays,
+    upOnePlus,
+    upSeventyFiveToOne,
+    upFiftyToSeventyFive,
+    upTwentyFiveToFifty,
+    upZeroToTwentyFive,
+  } = props;
 
+  console.log(upTwentyFiveToFifty);
   const getPercentage = (direction: string) => {
     switch (direction) {
       case "up":
@@ -24,11 +39,18 @@ const DataComponent = observer((props: DataComponentProps) => {
     <div className={styles["container"]}>
       <h1>Data component for EURUSD</h1>
       <h3>Total Bars: {totalBars}</h3>
+      <div>
+        <h3>
+          Total Up Days: {totalUpDays} {getPercentage("up")}%
+        </h3>
+        <h3>Up 1%+: {upOnePlus}</h3>
+        <h3>Up 0.75% to 1%: {upSeventyFiveToOne}</h3>
+        <h3>Up 0.5% to 0.75%: {upFiftyToSeventyFive}</h3>
+        <h3>Up 0.25% to 0.5%: {upTwentyFiveToFifty}</h3>
+        <h3>Up 0% to 0.25%: {upZeroToTwentyFive}</h3>
+      </div>
       <h3>
-        Total Up Days: {totalUpDays} {getPercentage("up")}
-      </h3>
-      <h3>
-        Total Down Days: {totalDownDays} {getPercentage("down")}
+        Total Down Days: {totalDownDays} {getPercentage("down")}%
       </h3>
     </div>
   );

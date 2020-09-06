@@ -62,9 +62,21 @@ export class DataStore {
     this.rawData.forEach((data: any) => {
       let open = parseFloat(data["Open"]);
       let close = parseFloat(data["Price"]);
+      let change = parseFloat(data["Change %"].split("%")[0]);
 
       if (close > open) {
         this.totalUpDays++;
+        if (change <= 0.25) {
+          this.allCloseProbabilities.upZeroToTwentyFive++;
+        } else if (change > 0.25 && change <= 0.5) {
+          this.allCloseProbabilities.upTwentyFiveToFifty++;
+        } else if (change > 0.5 && change <= 0.75) {
+          this.allCloseProbabilities.upFiftyToSeventyFive++;
+        } else if (change > 0.75 && change <= 1) {
+          this.allCloseProbabilities.upSeventyFiveToOne++;
+        } else if (change > 1) {
+          this.allCloseProbabilities.upOnePlus++;
+        }
       } else {
         this.totalDownDays++;
       }

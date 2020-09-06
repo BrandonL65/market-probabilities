@@ -15,6 +15,11 @@ const DataContainer = observer(() => {
     upFiftyToSeventyFive,
     upTwentyFiveToFifty,
     upZeroToTwentyFive,
+    downZeroToTwentyFive,
+    downTwentyFiveToFifty,
+    downFiftyToSeventyFive,
+    downSeventyFiveToOne,
+    downOnePlus,
   } = allCloseProbabilities;
 
   const loadData = async () => {
@@ -36,6 +41,11 @@ const DataContainer = observer(() => {
         upFiftyToSeventyFive={upFiftyToSeventyFive}
         upTwentyFiveToFifty={upTwentyFiveToFifty}
         upZeroToTwentyFive={upZeroToTwentyFive}
+        downZeroToTwentyFive={downZeroToTwentyFive}
+        downTwentyFiveToFifty={downTwentyFiveToFifty}
+        downFiftyToSeventyFive={downFiftyToSeventyFive}
+        downSeventyFiveToOne={downSeventyFiveToOne}
+        downOnePlus={downOnePlus}
       />
     </div>
   );

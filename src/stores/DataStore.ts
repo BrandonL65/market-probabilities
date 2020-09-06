@@ -79,6 +79,17 @@ export class DataStore {
         }
       } else {
         this.totalDownDays++;
+        if (change >= -0.25) {
+          this.allCloseProbabilities.downZeroToTwentyFive++;
+        } else if (change < -0.25 && change >= -0.5) {
+          this.allCloseProbabilities.downTwentyFiveToFifty++;
+        } else if (change < -0.5 && change >= -0.75) {
+          this.allCloseProbabilities.downFiftyToSeventyFive++;
+        } else if (change < -0.75 && change >= -1) {
+          this.allCloseProbabilities.downSeventyFiveToOne++;
+        } else if (change < -1) {
+          this.allCloseProbabilities.downOnePlus++;
+        }
       }
     });
   };

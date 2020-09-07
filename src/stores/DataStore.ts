@@ -64,34 +64,41 @@ export class DataStore {
       let close = parseFloat(data["Price"]);
       let change = parseFloat(data["Change %"].split("%")[0]);
 
-      if (close > open) {
-        this.totalUpDays++;
-        if (change <= 0.25) {
-          this.allCloseProbabilities.upZeroToTwentyFive++;
-        } else if (change > 0.25 && change <= 0.5) {
-          this.allCloseProbabilities.upTwentyFiveToFifty++;
-        } else if (change > 0.5 && change <= 0.75) {
-          this.allCloseProbabilities.upFiftyToSeventyFive++;
-        } else if (change > 0.75 && change <= 1) {
-          this.allCloseProbabilities.upSeventyFiveToOne++;
-        } else if (change > 1) {
-          this.allCloseProbabilities.upOnePlus++;
-        }
-      } else {
-        this.totalDownDays++;
-        if (change >= -0.25) {
-          this.allCloseProbabilities.downZeroToTwentyFive++;
-        } else if (change < -0.25 && change >= -0.5) {
-          this.allCloseProbabilities.downTwentyFiveToFifty++;
-        } else if (change < -0.5 && change >= -0.75) {
-          this.allCloseProbabilities.downFiftyToSeventyFive++;
-        } else if (change < -0.75 && change >= -1) {
-          this.allCloseProbabilities.downSeventyFiveToOne++;
-        } else if (change < -1) {
-          this.allCloseProbabilities.downOnePlus++;
-        }
-      }
+      this.testClosingZone(open, close, change);
     });
+  };
+
+  //test the % of time price retraces X%, then closes opposite direction
+
+  //test probabilities to close within 0.25% "zones"
+  testClosingZone = (open: number, close: number, change: number) => {
+    if (close > open) {
+      this.totalUpDays++;
+      if (change <= 0.25) {
+        this.allCloseProbabilities.upZeroToTwentyFive++;
+      } else if (change > 0.25 && change <= 0.5) {
+        this.allCloseProbabilities.upTwentyFiveToFifty++;
+      } else if (change > 0.5 && change <= 0.75) {
+        this.allCloseProbabilities.upFiftyToSeventyFive++;
+      } else if (change > 0.75 && change <= 1) {
+        this.allCloseProbabilities.upSeventyFiveToOne++;
+      } else if (change > 1) {
+        this.allCloseProbabilities.upOnePlus++;
+      }
+    } else {
+      this.totalDownDays++;
+      if (change >= -0.25) {
+        this.allCloseProbabilities.downZeroToTwentyFive++;
+      } else if (change < -0.25 && change >= -0.5) {
+        this.allCloseProbabilities.downTwentyFiveToFifty++;
+      } else if (change < -0.5 && change >= -0.75) {
+        this.allCloseProbabilities.downFiftyToSeventyFive++;
+      } else if (change < -0.75 && change >= -1) {
+        this.allCloseProbabilities.downSeventyFiveToOne++;
+      } else if (change < -1) {
+        this.allCloseProbabilities.downOnePlus++;
+      }
+    }
   };
 
   reset = () => {

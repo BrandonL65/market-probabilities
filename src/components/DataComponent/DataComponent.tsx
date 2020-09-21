@@ -59,7 +59,10 @@ const DataComponent = observer((props: DataComponentProps) => {
           <h3>
             Total Up Days: {totalUpDays}, {getPercentage("up")}%
           </h3>
-          <div className={styles["split-percentages"]}>
+          <h3>
+            Total Down Days: {totalDownDays}, {getPercentage("down")}%
+          </h3>
+          <div>
             <h3>
               1%+: {upOnePlus}, {getPercentageForClose(upOnePlus, totalBars)}%
             </h3>
@@ -79,32 +82,25 @@ const DataComponent = observer((props: DataComponentProps) => {
               0% to 0.25%: {upZeroToTwentyFive},{" "}
               {getPercentageForClose(upZeroToTwentyFive, totalBars)}%
             </h3>
-          </div>
-        </div>
-        <div className={styles["percentages"]}>
-          <h3>
-            Total Down Days: {totalDownDays}, {getPercentage("down")}%
-          </h3>
-          <div className={styles["split-percentages"]}>
             <h3>
-              -1%+: {downOnePlus},{" "}
-              {getPercentageForClose(downOnePlus, totalBars)}%
-            </h3>
-            <h3>
-              -0.75% to -1%: {downSeventyFiveToOne},{" "}
-              {getPercentageForClose(downSeventyFiveToOne, totalBars)}%
-            </h3>
-            <h3>
-              -0.5% to -0.75%: {downFiftyToSeventyFive},{" "}
-              {getPercentageForClose(downFiftyToSeventyFive, totalBars)}%
+              -0% to -0.25%: {downZeroToTwentyFive},{" "}
+              {getPercentageForClose(downZeroToTwentyFive, totalBars)}%
             </h3>
             <h3>
               -0.25% to -0.5%: {downTwentyFiveToFifty},{" "}
               {getPercentageForClose(downTwentyFiveToFifty, totalBars)}%
             </h3>
             <h3>
-              -0% to -0.25%: {downZeroToTwentyFive},{" "}
-              {getPercentageForClose(downZeroToTwentyFive, totalBars)}%
+              -0.5% to -0.75%: {downFiftyToSeventyFive},{" "}
+              {getPercentageForClose(downFiftyToSeventyFive, totalBars)}%
+            </h3>
+            <h3>
+              -0.75% to -1%: {downSeventyFiveToOne},{" "}
+              {getPercentageForClose(downSeventyFiveToOne, totalBars)}%
+            </h3>
+            <h3>
+              -1%+: {downOnePlus},{" "}
+              {getPercentageForClose(downOnePlus, totalBars)}%
             </h3>
           </div>
         </div>

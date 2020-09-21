@@ -35,6 +35,7 @@ const DataComponent = observer((props: DataComponentProps) => {
     downOnePlus,
   } = props;
 
+  //gets total % of up and down days
   const getPercentage = (direction: string) => {
     switch (direction) {
       case "up":
@@ -44,6 +45,7 @@ const DataComponent = observer((props: DataComponentProps) => {
     }
   };
 
+  //gets % of the days that price closes within that range, like 0.25 to 0.5, etc
   const getPercentageForClose = (count: number, totalDays: number) => {
     return ((count / totalDays) * 100).toFixed(2);
   };

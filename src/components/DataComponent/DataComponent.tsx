@@ -55,23 +55,21 @@ const DataComponent = observer((props: DataComponentProps) => {
     <div className={styles["container"]}>
       <h1>Data component for EURUSD</h1>
       <h3>Total Bars: {totalBars}</h3>
-      <div className={styles["stats"]}>
-        <PercentagesComponent
-          totalBars={totalBars}
-          totalUpDays={totalUpDays}
-          totalDownDays={totalDownDays}
-          upOnePlus={upOnePlus}
-          upSeventyFiveToOne={upSeventyFiveToOne}
-          upFiftyToSeventyFive={upFiftyToSeventyFive}
-          upTwentyFiveToFifty={upTwentyFiveToFifty}
-          upZeroToTwentyFive={upZeroToTwentyFive}
-          downZeroToTwentyFive={downZeroToTwentyFive}
-          downTwentyFiveToFifty={downTwentyFiveToFifty}
-          downFiftyToSeventyFive={downFiftyToSeventyFive}
-          downSeventyFiveToOne={downSeventyFiveToOne}
-          downOnePlus={downOnePlus}
-        />
-      </div>
+      <PercentagesComponent
+        totalBars={totalBars}
+        totalUpDays={totalUpDays}
+        totalDownDays={totalDownDays}
+        upOnePlus={upOnePlus}
+        upSeventyFiveToOne={upSeventyFiveToOne}
+        upFiftyToSeventyFive={upFiftyToSeventyFive}
+        upTwentyFiveToFifty={upTwentyFiveToFifty}
+        upZeroToTwentyFive={upZeroToTwentyFive}
+        downZeroToTwentyFive={downZeroToTwentyFive}
+        downTwentyFiveToFifty={downTwentyFiveToFifty}
+        downFiftyToSeventyFive={downFiftyToSeventyFive}
+        downSeventyFiveToOne={downSeventyFiveToOne}
+        downOnePlus={downOnePlus}
+      />
     </div>
   );
 });

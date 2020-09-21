@@ -1,10 +1,10 @@
 import React from "react";
 import DataContainer from "./containers/DataContainer";
-import "./App.css";
+import styles from "./App.module.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles["App"]}>
       <h1>Market Probabilities</h1>
       <DataContainer />
     </div>

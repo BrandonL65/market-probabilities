@@ -46,19 +46,18 @@ const DataComponent = observer((props: DataComponentProps) => {
     }
   };
 
-  //gets % of the days that price closes within that range, like 0.25 to 0.5, etc
-  const getPercentageForClose = (count: number, totalDays: number) => {
-    return ((count / totalDays) * 100).toFixed(2);
-  };
-
   return (
     <div className={styles["container"]}>
       <h1>Data component for EURUSD</h1>
       <h3>Total Bars: {totalBars}</h3>
+      <h3>
+        Total Up Days: {totalUpDays}, {getPercentage("up")}%
+      </h3>
+      <h3>
+        Total Down Days: {totalDownDays}, {getPercentage("down")}%
+      </h3>
       <PercentagesComponent
         totalBars={totalBars}
-        totalUpDays={totalUpDays}
-        totalDownDays={totalDownDays}
         upOnePlus={upOnePlus}
         upSeventyFiveToOne={upSeventyFiveToOne}
         upFiftyToSeventyFive={upFiftyToSeventyFive}

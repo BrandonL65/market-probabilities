@@ -1,7 +1,3 @@
-.container {
-  background-color: palevioletred;
-}
-
 .stats {
   display: flex;
   justify-content: center;

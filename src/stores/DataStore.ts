@@ -59,6 +59,7 @@ export class DataStore {
   };
 
   parseData = () => {
+    console.log("Parsing data from dataStore");
     this.rawData.forEach((data: any) => {
       let open = parseFloat(data["Open"]);
       let close = parseFloat(data["Price"]);

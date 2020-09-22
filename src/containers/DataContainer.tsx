@@ -22,7 +22,9 @@ const DataContainer = observer(() => {
     downOnePlus,
   } = allCloseProbabilities;
 
+  //parses csv and loads the data into our MobX store
   const loadData = async () => {
+    console.log("Loading data...");
     dataStore.reset();
     let csv = await d3.csv(data);
     dataStore.rawData = csv;

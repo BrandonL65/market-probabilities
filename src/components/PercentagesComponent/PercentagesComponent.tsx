@@ -4,8 +4,6 @@ import styles from "./PercentagesComponent.module.css";
 
 interface PercentagesComponentProps {
   totalBars: number;
-  totalUpDays: number;
-  totalDownDays: number;
   upOnePlus: number;
   upSeventyFiveToOne: number;
   upFiftyToSeventyFive: number;
@@ -26,8 +24,6 @@ and 0.25% - 0.5%, etc, up to a total of +1% and -1%.
 const PercentagesComponent = observer((props: PercentagesComponentProps) => {
   const {
     totalBars,
-    totalUpDays,
-    totalDownDays,
     upOnePlus,
     upSeventyFiveToOne,
     upFiftyToSeventyFive,

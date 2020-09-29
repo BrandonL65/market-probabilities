@@ -37,7 +37,7 @@ const PercentagesComponent = observer((props: PercentagesComponentProps) => {
   } = props;
 
   //gets % of the days that price closes within that range, like 0.25 to 0.5, etc
-  const getPercentageForClose = (count: number, totalDays: number) => {
+  const getPercentageForClose = (count: number, totalDays: number): string => {
     return ((count / totalDays) * 100).toFixed(2);
   };
 

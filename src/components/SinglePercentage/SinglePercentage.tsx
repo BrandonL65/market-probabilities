@@ -4,6 +4,7 @@ interface SinglePercentageProps {
   title: string;
   totalBars: number;
   percentage: string;
+  name: string;
 }
 
 const SinglePercentage = () => {

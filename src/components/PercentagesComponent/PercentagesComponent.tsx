@@ -1,7 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
 import SinglePercentage from "../SinglePercentage/SinglePercentage";
-import styles from "./PercentagesComponent.module.css";
 
 interface PercentagesComponentProps {
   totalBars: number;

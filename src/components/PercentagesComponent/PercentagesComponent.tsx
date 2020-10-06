@@ -1,19 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
 import SinglePercentage from "../SinglePercentage/SinglePercentage";
+import { AllCloseProbabilities } from "../../stores/DataStore";
 
-interface PercentagesComponentProps {
+interface PercentagesComponentProps extends AllCloseProbabilities {
   totalBars: number;
-  upOnePlus: number;
-  upSeventyFiveToOne: number;
-  upFiftyToSeventyFive: number;
-  upTwentyFiveToFifty: number;
-  upZeroToTwentyFive: number;
-  downZeroToTwentyFive: number;
-  downTwentyFiveToFifty: number;
-  downFiftyToSeventyFive: number;
-  downSeventyFiveToOne: number;
-  downOnePlus: number;
 }
 
 /*

@@ -29,8 +29,22 @@ export class DataStore {
 
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
+  @observable averageRange: number = 0;
 
   @observable allCloseProbabilities: AllCloseProbabilities = {
+    upOnePlus: 0,
+    upSeventyFiveToOne: 0,
+    upFiftyToSeventyFive: 0,
+    upTwentyFiveToFifty: 0,
+    upZeroToTwentyFive: 0,
+    downZeroToTwentyFive: 0,
+    downTwentyFiveToFifty: 0,
+    downFiftyToSeventyFive: 0,
+    downSeventyFiveToOne: 0,
+    downOnePlus: 0,
+  };
+
+  @observable allCloseProbabilitiesUsingHiLo: AllCloseProbabilities = {
     upOnePlus: 0,
     upSeventyFiveToOne: 0,
     upFiftyToSeventyFive: 0,
@@ -48,10 +62,20 @@ export class DataStore {
     this.rawData.forEach((data: any) => {
       let open = parseFloat(data["Open"]);
       let close = parseFloat(data["Price"]);
+      let high = parseFloat(data["High"]);
+      let low = parseFloat(data["Low"]);
       let change = parseFloat(data["Change %"].split("%")[0]);
 
+      //calculates what percentile the bar closed in, like 0.25% up, etc
       this.testClosingZone(open, close, change);
+
+      this.averageRange = this.averageRange + (high - low) * 10000;
     });
+
+    //calculates average high-low range, assigns it
+    this.averageRange = parseFloat(
+      (this.averageRange / this.rawData.length).toFixed(2)
+    );
   };
 
   //test the % of time price retraces X%, then closes opposite direction

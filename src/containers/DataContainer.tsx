@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import DataComponent from "../components/DataComponent/DataComponent";
 import * as d3 from "d3";
-import { csv } from "d3";
 import { Button } from "antd";
 import { observer } from "mobx-react";
 import { rootStoreContext } from "../contexts";
@@ -11,7 +10,12 @@ const GBPUSD_DATA = require("../data/GBPUSD.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
-  const { totalUpDays, totalDownDays, allCloseProbabilities } = dataStore;
+  const {
+    totalUpDays,
+    totalDownDays,
+    allCloseProbabilities,
+    averageRange,
+  } = dataStore;
   const {
     upOnePlus,
     upSeventyFiveToOne,
@@ -47,6 +51,7 @@ const DataContainer = observer(() => {
         totalBars={dataStore.rawData.length}
         totalUpDays={totalUpDays}
         totalDownDays={totalDownDays}
+        averageRange={averageRange}
         upOnePlus={upOnePlus}
         upSeventyFiveToOne={upSeventyFiveToOne}
         upFiftyToSeventyFive={upFiftyToSeventyFive}

@@ -17,6 +17,7 @@ interface DataComponentProps {
   downFiftyToSeventyFive: number;
   downSeventyFiveToOne: number;
   downOnePlus: number;
+  averageRange: number;
 }
 
 const DataComponent = observer((props: DataComponentProps) => {
@@ -34,6 +35,7 @@ const DataComponent = observer((props: DataComponentProps) => {
     downFiftyToSeventyFive,
     downSeventyFiveToOne,
     downOnePlus,
+    averageRange,
   } = props;
 
   //gets total % of up and down days
@@ -56,6 +58,7 @@ const DataComponent = observer((props: DataComponentProps) => {
       <h3>
         Total Down Days: {totalDownDays}, {getPercentage("down")}%
       </h3>
+      <h3>Average High to Low range: {averageRange} pips</h3>
       <PercentagesComponent
         totalBars={totalBars}
         upOnePlus={upOnePlus}

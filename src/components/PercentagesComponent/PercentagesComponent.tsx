@@ -1,20 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
 import SinglePercentage from "../SinglePercentage/SinglePercentage";
-import styles from "./PercentagesComponent.module.css";
+import { AllCloseProbabilities } from "../../stores/DataStore";
 
-interface PercentagesComponentProps {
+interface PercentagesComponentProps extends AllCloseProbabilities {
   totalBars: number;
-  upOnePlus: number;
-  upSeventyFiveToOne: number;
-  upFiftyToSeventyFive: number;
-  upTwentyFiveToFifty: number;
-  upZeroToTwentyFive: number;
-  downZeroToTwentyFive: number;
-  downTwentyFiveToFifty: number;
-  downFiftyToSeventyFive: number;
-  downSeventyFiveToOne: number;
-  downOnePlus: number;
 }
 
 /*
@@ -70,22 +60,22 @@ const PercentagesComponent = observer((props: PercentagesComponentProps) => {
         percentage={getPercentageForClose(upZeroToTwentyFive, totalBars)}
       />
       <SinglePercentage
-        title={"0% - -0.25%"}
+        title={"-0.25% - 0%"}
         totalBars={downZeroToTwentyFive}
         percentage={getPercentageForClose(downZeroToTwentyFive, totalBars)}
       />
       <SinglePercentage
-        title={"-0.25% - -0.5%"}
+        title={"-0.5% - 0.25%"}
         totalBars={downTwentyFiveToFifty}
         percentage={getPercentageForClose(downTwentyFiveToFifty, totalBars)}
       />
       <SinglePercentage
-        title={"-0.5% - -0.75%"}
+        title={"-0.75% - -0.5%"}
         totalBars={downFiftyToSeventyFive}
         percentage={getPercentageForClose(downFiftyToSeventyFive, totalBars)}
       />
       <SinglePercentage
-        title={"-0.75% - -1%"}
+        title={"-1% - -0.75%"}
         totalBars={downSeventyFiveToOne}
         percentage={getPercentageForClose(downSeventyFiveToOne, totalBars)}
       />

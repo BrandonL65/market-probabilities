@@ -1,16 +1,6 @@
 import { observable } from "mobx";
 import { DSVRowArray } from "d3";
 
-interface DTURetrace {
-  downTwentyFive: number;
-  downFifty: number;
-}
-
-interface UTDRetrace {
-  upTwentyFive: number;
-  upFifty: number;
-}
-
 interface AllCloseProbabilities {
   upOnePlus: number;
   upSeventyFiveToOne: number;
@@ -39,11 +29,6 @@ export class DataStore {
 
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
-
-  @observable downToUpRetrace: DTURetrace = {
-    downTwentyFive: 0,
-    downFifty: 0,
-  };
 
   @observable allCloseProbabilities: AllCloseProbabilities = {
     upOnePlus: 0,
@@ -107,5 +92,17 @@ export class DataStore {
     this.rawData = [];
     this.totalUpDays = 0;
     this.totalDownDays = 0;
+    this.allCloseProbabilities = {
+      upOnePlus: 0,
+      upSeventyFiveToOne: 0,
+      upFiftyToSeventyFive: 0,
+      upTwentyFiveToFifty: 0,
+      upZeroToTwentyFive: 0,
+      downZeroToTwentyFive: 0,
+      downTwentyFiveToFifty: 0,
+      downFiftyToSeventyFive: 0,
+      downSeventyFiveToOne: 0,
+      downOnePlus: 0,
+    };
   };
 }

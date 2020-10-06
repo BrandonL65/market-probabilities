@@ -102,6 +102,7 @@ const DataContainer = observer(() => {
         downOnePlus={downOnePlus}
       />
       <CandleRangeComponent
+        totalBars={dataStore.rawData.length}
         u5={u5}
         u10={u10}
         u15={u15}

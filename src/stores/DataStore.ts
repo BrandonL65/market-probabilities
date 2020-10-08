@@ -51,7 +51,7 @@ export interface CandleRangeStatistics {
 }
 
 //Interface for the candle proportions, like open to low, open to high, open to close ranges
-interface CandleProportions {
+export interface CandleProportions {
   OH5: number;
   OH10: number;
   OH15: number;
@@ -166,6 +166,9 @@ export class DataStore {
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
   @observable averageRange: number = 0;
+  @observable upCandleAvgHighToOpen: number = 0;
+  @observable upCandleAvgCloseToOpen: number = 0;
+  @observable upCandleAvgOpenToLow: number = 0;
 
   @observable allCloseProbabilities: AllCloseProbabilities = {
     upOnePlus: 0,
@@ -340,7 +343,22 @@ export class DataStore {
     this.averageRange = parseFloat(
       (this.averageRange / this.rawData.length).toFixed(2)
     );
-    console.log(this.candleProportionsUpCandles);
+
+    this.upCandleAverageRangeAssignment();
+  };
+
+  //divides the average OH OC OL ranges of up candles by total # of up candles
+  upCandleAverageRangeAssignment = () => {
+    this.upCandleAvgHighToOpen = parseFloat(
+      (this.upCandleAvgHighToOpen / this.totalUpDays).toFixed(2)
+    );
+    this.upCandleAvgCloseToOpen = parseFloat(
+      (this.upCandleAvgCloseToOpen / this.totalUpDays).toFixed(2)
+    );
+    this.upCandleAvgOpenToLow = parseFloat(
+      (this.upCandleAvgOpenToLow / this.totalUpDays).toFixed(2)
+    );
+    console.log(this.upCandleAvgHighToOpen, this.upCandleAvgOpenToLow);
   };
 
   //does calculations for OC OH OL of green candles
@@ -361,211 +379,214 @@ export class DataStore {
     this.upCandlesAssignProportionsForOH(highToOpenDifference);
     this.upCandlesAssignProportionsForOC(closeToOpenDifference);
     this.upCandlesAssignProportionsForOL(openToLowDifference);
+    this.upCandleAvgHighToOpen += highToOpenDifference;
+    this.upCandleAvgCloseToOpen += closeToOpenDifference;
+    this.upCandleAvgOpenToLow += openToLowDifference;
   };
 
   upCandlesAssignProportionsForOH = (highToOpenPips: number) => {
     const { candleProportionsUpCandles } = this;
-    if (highToOpenPips < 5) {
+    if (highToOpenPips <= 5) {
       candleProportionsUpCandles.OH5++;
-    } else if (highToOpenPips < 10) {
+    } else if (highToOpenPips <= 10) {
       candleProportionsUpCandles.OH10++;
-    } else if (highToOpenPips < 15) {
+    } else if (highToOpenPips <= 15) {
       candleProportionsUpCandles.OH15++;
-    } else if (highToOpenPips < 20) {
+    } else if (highToOpenPips <= 20) {
       candleProportionsUpCandles.OH20++;
-    } else if (highToOpenPips < 25) {
+    } else if (highToOpenPips <= 25) {
       candleProportionsUpCandles.OH25++;
-    } else if (highToOpenPips < 30) {
+    } else if (highToOpenPips <= 30) {
       candleProportionsUpCandles.OH30++;
-    } else if (highToOpenPips < 35) {
+    } else if (highToOpenPips <= 35) {
       candleProportionsUpCandles.OH35++;
-    } else if (highToOpenPips < 40) {
+    } else if (highToOpenPips <= 40) {
       candleProportionsUpCandles.OH40++;
-    } else if (highToOpenPips < 45) {
+    } else if (highToOpenPips <= 45) {
       candleProportionsUpCandles.OH45++;
-    } else if (highToOpenPips < 50) {
+    } else if (highToOpenPips <= 50) {
       candleProportionsUpCandles.OH50++;
-    } else if (highToOpenPips < 55) {
+    } else if (highToOpenPips <= 55) {
       candleProportionsUpCandles.OH55++;
-    } else if (highToOpenPips < 60) {
+    } else if (highToOpenPips <= 60) {
       candleProportionsUpCandles.OH60++;
-    } else if (highToOpenPips < 70) {
+    } else if (highToOpenPips <= 70) {
       candleProportionsUpCandles.OH70++;
-    } else if (highToOpenPips < 80) {
+    } else if (highToOpenPips <= 80) {
       candleProportionsUpCandles.OH80++;
-    } else if (highToOpenPips < 90) {
+    } else if (highToOpenPips <= 90) {
       candleProportionsUpCandles.OH90++;
-    } else if (highToOpenPips < 100) {
+    } else if (highToOpenPips <= 100) {
       candleProportionsUpCandles.OH100++;
-    } else if (highToOpenPips < 110) {
+    } else if (highToOpenPips <= 110) {
       candleProportionsUpCandles.OH110++;
-    } else if (highToOpenPips < 120) {
+    } else if (highToOpenPips <= 120) {
       candleProportionsUpCandles.OH120++;
-    } else if (highToOpenPips < 130) {
+    } else if (highToOpenPips <= 130) {
       candleProportionsUpCandles.OH130++;
-    } else if (highToOpenPips < 140) {
+    } else if (highToOpenPips <= 140) {
       candleProportionsUpCandles.OH140++;
-    } else if (highToOpenPips < 150) {
+    } else if (highToOpenPips <= 150) {
       candleProportionsUpCandles.OH150++;
-    } else if (highToOpenPips < 160) {
+    } else if (highToOpenPips <= 160) {
       candleProportionsUpCandles.OH160++;
-    } else if (highToOpenPips < 170) {
+    } else if (highToOpenPips <= 170) {
       candleProportionsUpCandles.OH170++;
-    } else if (highToOpenPips < 180) {
+    } else if (highToOpenPips <= 180) {
       candleProportionsUpCandles.OH180++;
-    } else if (highToOpenPips < 190) {
+    } else if (highToOpenPips <= 190) {
       candleProportionsUpCandles.OH190++;
-    } else if (highToOpenPips < 200) {
+    } else if (highToOpenPips <= 200) {
       candleProportionsUpCandles.OH200++;
-    } else if (highToOpenPips < 210) {
+    } else if (highToOpenPips <= 210) {
       candleProportionsUpCandles.OH210++;
-    } else if (highToOpenPips < 220) {
+    } else if (highToOpenPips <= 220) {
       candleProportionsUpCandles.OH220++;
-    } else if (highToOpenPips < 230) {
+    } else if (highToOpenPips <= 230) {
       candleProportionsUpCandles.OH230++;
-    } else if (highToOpenPips < 240) {
+    } else if (highToOpenPips <= 240) {
       candleProportionsUpCandles.OH240++;
-    } else if (highToOpenPips < 250) {
+    } else if (highToOpenPips <= 250) {
       candleProportionsUpCandles.OH250++;
-    } else {
+    } else if (highToOpenPips > 250) {
       candleProportionsUpCandles.OH250plus++;
     }
   };
 
   upCandlesAssignProportionsForOC = (closeToOpenPips: number) => {
     const { candleProportionsUpCandles } = this;
-    if (closeToOpenPips < 5) {
+    if (closeToOpenPips <= 5) {
       candleProportionsUpCandles.OC5++;
-    } else if (closeToOpenPips < 10) {
+    } else if (closeToOpenPips <= 10) {
       candleProportionsUpCandles.OC10++;
-    } else if (closeToOpenPips < 15) {
+    } else if (closeToOpenPips <= 15) {
       candleProportionsUpCandles.OC15++;
-    } else if (closeToOpenPips < 20) {
+    } else if (closeToOpenPips <= 20) {
       candleProportionsUpCandles.OC20++;
-    } else if (closeToOpenPips < 25) {
+    } else if (closeToOpenPips <= 25) {
       candleProportionsUpCandles.OC25++;
-    } else if (closeToOpenPips < 30) {
+    } else if (closeToOpenPips <= 30) {
       candleProportionsUpCandles.OC30++;
-    } else if (closeToOpenPips < 35) {
+    } else if (closeToOpenPips <= 35) {
       candleProportionsUpCandles.OC35++;
-    } else if (closeToOpenPips < 40) {
+    } else if (closeToOpenPips <= 40) {
       candleProportionsUpCandles.OC40++;
-    } else if (closeToOpenPips < 45) {
+    } else if (closeToOpenPips <= 45) {
       candleProportionsUpCandles.OC45++;
-    } else if (closeToOpenPips < 50) {
+    } else if (closeToOpenPips <= 50) {
       candleProportionsUpCandles.OC50++;
-    } else if (closeToOpenPips < 55) {
+    } else if (closeToOpenPips <= 55) {
       candleProportionsUpCandles.OC55++;
-    } else if (closeToOpenPips < 60) {
+    } else if (closeToOpenPips <= 60) {
       candleProportionsUpCandles.OC60++;
-    } else if (closeToOpenPips < 70) {
+    } else if (closeToOpenPips <= 70) {
       candleProportionsUpCandles.OC70++;
-    } else if (closeToOpenPips < 80) {
+    } else if (closeToOpenPips <= 80) {
       candleProportionsUpCandles.OC80++;
-    } else if (closeToOpenPips < 90) {
+    } else if (closeToOpenPips <= 90) {
       candleProportionsUpCandles.OC90++;
-    } else if (closeToOpenPips < 100) {
+    } else if (closeToOpenPips <= 100) {
       candleProportionsUpCandles.OC100++;
-    } else if (closeToOpenPips < 110) {
+    } else if (closeToOpenPips <= 110) {
       candleProportionsUpCandles.OC110++;
-    } else if (closeToOpenPips < 120) {
+    } else if (closeToOpenPips <= 120) {
       candleProportionsUpCandles.OC120++;
-    } else if (closeToOpenPips < 130) {
+    } else if (closeToOpenPips <= 130) {
       candleProportionsUpCandles.OC130++;
-    } else if (closeToOpenPips < 140) {
+    } else if (closeToOpenPips <= 140) {
       candleProportionsUpCandles.OC140++;
-    } else if (closeToOpenPips < 150) {
+    } else if (closeToOpenPips <= 150) {
       candleProportionsUpCandles.OC150++;
-    } else if (closeToOpenPips < 160) {
+    } else if (closeToOpenPips <= 160) {
       candleProportionsUpCandles.OC160++;
-    } else if (closeToOpenPips < 170) {
+    } else if (closeToOpenPips <= 170) {
       candleProportionsUpCandles.OC170++;
-    } else if (closeToOpenPips < 180) {
+    } else if (closeToOpenPips <= 180) {
       candleProportionsUpCandles.OC180++;
-    } else if (closeToOpenPips < 190) {
+    } else if (closeToOpenPips <= 190) {
       candleProportionsUpCandles.OC190++;
-    } else if (closeToOpenPips < 200) {
+    } else if (closeToOpenPips <= 200) {
       candleProportionsUpCandles.OC200++;
-    } else if (closeToOpenPips < 210) {
+    } else if (closeToOpenPips <= 210) {
       candleProportionsUpCandles.OC210++;
-    } else if (closeToOpenPips < 220) {
+    } else if (closeToOpenPips <= 220) {
       candleProportionsUpCandles.OC220++;
-    } else if (closeToOpenPips < 230) {
+    } else if (closeToOpenPips <= 230) {
       candleProportionsUpCandles.OC230++;
-    } else if (closeToOpenPips < 240) {
+    } else if (closeToOpenPips <= 240) {
       candleProportionsUpCandles.OC240++;
-    } else if (closeToOpenPips < 250) {
+    } else if (closeToOpenPips <= 250) {
       candleProportionsUpCandles.OC250++;
-    } else {
+    } else if (closeToOpenPips > 250) {
       candleProportionsUpCandles.OC250Plus++;
     }
   };
 
   upCandlesAssignProportionsForOL = (openToLowPips: number) => {
     const { candleProportionsUpCandles } = this;
-    if (openToLowPips < 5) {
+    if (openToLowPips <= 5) {
       candleProportionsUpCandles.OL5++;
-    } else if (openToLowPips < 10) {
+    } else if (openToLowPips <= 10) {
       candleProportionsUpCandles.OL10++;
-    } else if (openToLowPips < 15) {
+    } else if (openToLowPips <= 15) {
       candleProportionsUpCandles.OL15++;
-    } else if (openToLowPips < 20) {
+    } else if (openToLowPips <= 20) {
       candleProportionsUpCandles.OL20++;
-    } else if (openToLowPips < 25) {
+    } else if (openToLowPips <= 25) {
       candleProportionsUpCandles.OL25++;
-    } else if (openToLowPips < 30) {
+    } else if (openToLowPips <= 30) {
       candleProportionsUpCandles.OL30++;
-    } else if (openToLowPips < 35) {
+    } else if (openToLowPips <= 35) {
       candleProportionsUpCandles.OL35++;
-    } else if (openToLowPips < 40) {
+    } else if (openToLowPips <= 40) {
       candleProportionsUpCandles.OL40++;
-    } else if (openToLowPips < 45) {
+    } else if (openToLowPips <= 45) {
       candleProportionsUpCandles.OL45++;
-    } else if (openToLowPips < 50) {
+    } else if (openToLowPips <= 50) {
       candleProportionsUpCandles.OL50++;
-    } else if (openToLowPips < 55) {
+    } else if (openToLowPips <= 55) {
       candleProportionsUpCandles.OL55++;
-    } else if (openToLowPips < 60) {
+    } else if (openToLowPips <= 60) {
       candleProportionsUpCandles.OL60++;
-    } else if (openToLowPips < 70) {
+    } else if (openToLowPips <= 70) {
       candleProportionsUpCandles.OL70++;
-    } else if (openToLowPips < 80) {
+    } else if (openToLowPips <= 80) {
       candleProportionsUpCandles.OL80++;
-    } else if (openToLowPips < 90) {
+    } else if (openToLowPips <= 90) {
       candleProportionsUpCandles.OL90++;
-    } else if (openToLowPips < 100) {
+    } else if (openToLowPips <= 100) {
       candleProportionsUpCandles.OL100++;
-    } else if (openToLowPips < 110) {
+    } else if (openToLowPips <= 110) {
       candleProportionsUpCandles.OL110++;
-    } else if (openToLowPips < 120) {
+    } else if (openToLowPips <= 120) {
       candleProportionsUpCandles.OL120++;
-    } else if (openToLowPips < 130) {
+    } else if (openToLowPips <= 130) {
       candleProportionsUpCandles.OL130++;
-    } else if (openToLowPips < 140) {
+    } else if (openToLowPips <= 140) {
       candleProportionsUpCandles.OL140++;
-    } else if (openToLowPips < 150) {
+    } else if (openToLowPips <= 150) {
       candleProportionsUpCandles.OL150++;
-    } else if (openToLowPips < 160) {
+    } else if (openToLowPips <= 160) {
       candleProportionsUpCandles.OL160++;
-    } else if (openToLowPips < 170) {
+    } else if (openToLowPips <= 170) {
       candleProportionsUpCandles.OL170++;
-    } else if (openToLowPips < 180) {
+    } else if (openToLowPips <= 180) {
       candleProportionsUpCandles.OL180++;
-    } else if (openToLowPips < 190) {
+    } else if (openToLowPips <= 190) {
       candleProportionsUpCandles.OL190++;
-    } else if (openToLowPips < 200) {
+    } else if (openToLowPips <= 200) {
       candleProportionsUpCandles.OL200++;
-    } else if (openToLowPips < 210) {
+    } else if (openToLowPips <= 210) {
       candleProportionsUpCandles.OL210++;
-    } else if (openToLowPips < 220) {
+    } else if (openToLowPips <= 220) {
       candleProportionsUpCandles.OL220++;
-    } else if (openToLowPips < 230) {
+    } else if (openToLowPips <= 230) {
       candleProportionsUpCandles.OL230++;
-    } else if (openToLowPips < 240) {
+    } else if (openToLowPips <= 240) {
       candleProportionsUpCandles.OL240++;
-    } else if (openToLowPips < 250) {
+    } else if (openToLowPips <= 250) {
       candleProportionsUpCandles.OL250++;
-    } else {
+    } else if (openToLowPips > 250) {
       candleProportionsUpCandles.OL250Plus++;
     }
   };

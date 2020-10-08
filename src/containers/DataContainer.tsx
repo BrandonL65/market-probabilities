@@ -19,6 +19,9 @@ const DataContainer = observer(() => {
     averageRange,
     allRanges,
     candleProportionsUpCandles,
+    upCandleAvgHighToOpen,
+    upCandleAvgCloseToOpen,
+    upCandleAvgOpenToLow,
   } = dataStore;
   const {
     upOnePlus,
@@ -139,7 +142,108 @@ const DataContainer = observer(() => {
         u250={u250}
         u250plus={u250plus}
       />
-      <UpDaysCandleProportions />
+      <UpDaysCandleProportions
+        totalUpBars={totalUpDays}
+        avgOH={upCandleAvgHighToOpen}
+        avgOC={upCandleAvgCloseToOpen}
+        avgOL={upCandleAvgOpenToLow}
+        OH5={candleProportionsUpCandles.OH5}
+        OH10={candleProportionsUpCandles.OH10}
+        OH15={candleProportionsUpCandles.OH15}
+        OH20={candleProportionsUpCandles.OH20}
+        OH25={candleProportionsUpCandles.OH25}
+        OH30={candleProportionsUpCandles.OH30}
+        OH35={candleProportionsUpCandles.OH35}
+        OH40={candleProportionsUpCandles.OH40}
+        OH45={candleProportionsUpCandles.OH45}
+        OH50={candleProportionsUpCandles.OH50}
+        OH55={candleProportionsUpCandles.OH55}
+        OH60={candleProportionsUpCandles.OH60}
+        OH70={candleProportionsUpCandles.OH70}
+        OH80={candleProportionsUpCandles.OH80}
+        OH90={candleProportionsUpCandles.OH90}
+        OH100={candleProportionsUpCandles.OH100}
+        OH110={candleProportionsUpCandles.OH110}
+        OH120={candleProportionsUpCandles.OH120}
+        OH130={candleProportionsUpCandles.OH130}
+        OH140={candleProportionsUpCandles.OH140}
+        OH150={candleProportionsUpCandles.OH150}
+        OH160={candleProportionsUpCandles.OH160}
+        OH170={candleProportionsUpCandles.OH170}
+        OH180={candleProportionsUpCandles.OH180}
+        OH190={candleProportionsUpCandles.OH190}
+        OH200={candleProportionsUpCandles.OH200}
+        OH210={candleProportionsUpCandles.OH210}
+        OH220={candleProportionsUpCandles.OH220}
+        OH230={candleProportionsUpCandles.OH230}
+        OH240={candleProportionsUpCandles.OH240}
+        OH250={candleProportionsUpCandles.OH250}
+        OH250plus={candleProportionsUpCandles.OH250plus}
+        OC5={candleProportionsUpCandles.OC5}
+        OC10={candleProportionsUpCandles.OC10}
+        OC15={candleProportionsUpCandles.OC15}
+        OC20={candleProportionsUpCandles.OC20}
+        OC25={candleProportionsUpCandles.OC25}
+        OC30={candleProportionsUpCandles.OC30}
+        OC35={candleProportionsUpCandles.OC35}
+        OC40={candleProportionsUpCandles.OC40}
+        OC45={candleProportionsUpCandles.OC45}
+        OC50={candleProportionsUpCandles.OC50}
+        OC55={candleProportionsUpCandles.OC55}
+        OC60={candleProportionsUpCandles.OC60}
+        OC70={candleProportionsUpCandles.OC70}
+        OC80={candleProportionsUpCandles.OC80}
+        OC90={candleProportionsUpCandles.OC90}
+        OC100={candleProportionsUpCandles.OC100}
+        OC110={candleProportionsUpCandles.OC110}
+        OC120={candleProportionsUpCandles.OC120}
+        OC130={candleProportionsUpCandles.OC130}
+        OC140={candleProportionsUpCandles.OC140}
+        OC150={candleProportionsUpCandles.OC150}
+        OC160={candleProportionsUpCandles.OC160}
+        OC170={candleProportionsUpCandles.OC170}
+        OC180={candleProportionsUpCandles.OC180}
+        OC190={candleProportionsUpCandles.OC190}
+        OC200={candleProportionsUpCandles.OC200}
+        OC210={candleProportionsUpCandles.OC210}
+        OC220={candleProportionsUpCandles.OC220}
+        OC230={candleProportionsUpCandles.OC230}
+        OC240={candleProportionsUpCandles.OC240}
+        OC250={candleProportionsUpCandles.OC250}
+        OC250Plus={candleProportionsUpCandles.OC250Plus}
+        OL5={candleProportionsUpCandles.OL5}
+        OL10={candleProportionsUpCandles.OL10}
+        OL15={candleProportionsUpCandles.OL15}
+        OL20={candleProportionsUpCandles.OL20}
+        OL25={candleProportionsUpCandles.OL25}
+        OL30={candleProportionsUpCandles.OL30}
+        OL35={candleProportionsUpCandles.OL35}
+        OL40={candleProportionsUpCandles.OL40}
+        OL45={candleProportionsUpCandles.OL45}
+        OL50={candleProportionsUpCandles.OL50}
+        OL55={candleProportionsUpCandles.OL55}
+        OL60={candleProportionsUpCandles.OL60}
+        OL70={candleProportionsUpCandles.OL70}
+        OL80={candleProportionsUpCandles.OL80}
+        OL90={candleProportionsUpCandles.OL90}
+        OL100={candleProportionsUpCandles.OL100}
+        OL110={candleProportionsUpCandles.OL110}
+        OL120={candleProportionsUpCandles.OL120}
+        OL130={candleProportionsUpCandles.OL130}
+        OL140={candleProportionsUpCandles.OL140}
+        OL150={candleProportionsUpCandles.OL150}
+        OL160={candleProportionsUpCandles.OL160}
+        OL170={candleProportionsUpCandles.OL170}
+        OL180={candleProportionsUpCandles.OL180}
+        OL190={candleProportionsUpCandles.OL190}
+        OL200={candleProportionsUpCandles.OL200}
+        OL210={candleProportionsUpCandles.OL210}
+        OL220={candleProportionsUpCandles.OL220}
+        OL230={candleProportionsUpCandles.OL230}
+        OL240={candleProportionsUpCandles.OL240}
+        OL250={candleProportionsUpCandles.OL250}
+        OL250Plus={candleProportionsUpCandles.OL250Plus}
+      />
     </div>
   );
 });

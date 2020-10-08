@@ -10,7 +10,7 @@ interface CandleRangeComponentProps extends CandleRangeStatistics {
 const CandleRangeComponent = observer((props: CandleRangeComponentProps) => {
   const { totalBars } = props;
   return (
-    <div style={{ marginBottom: "2%" }}>
+    <div style={{ marginBottom: "2%", width: "65%", margin: "auto" }}>
       <h1>Below is the total range of the candles</h1>
       <div>
         <CandleRangeDisplay

@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import styles from "./CandleRangeDisplay.module.css";
 
 interface CandleRangeDisplayProps {
-  section: number;
+  section: number | string;
   total: number;
   totalBars: number;
 }

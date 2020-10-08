@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import DataComponentForOpenClosePercentages from "../components/DataComponentForOpenClosePercentages/DataComponentForOpenClosePercentages";
 import CandleRangeComponent from "../components/CandleRangeComponent/CandleRangeComponent";
+import UpDaysCandleProportions from "../components/UpDaysCandleProportions/UpDaysCandleProportions";
 import * as d3 from "d3";
 import { Button } from "antd";
 import { observer } from "mobx-react";
@@ -17,6 +18,7 @@ const DataContainer = observer(() => {
     allCloseProbabilities,
     averageRange,
     allRanges,
+    candleProportionsUpCandles,
   } = dataStore;
   const {
     upOnePlus,
@@ -137,6 +139,7 @@ const DataContainer = observer(() => {
         u250={u250}
         u250plus={u250plus}
       />
+      <UpDaysCandleProportions />
     </div>
   );
 });

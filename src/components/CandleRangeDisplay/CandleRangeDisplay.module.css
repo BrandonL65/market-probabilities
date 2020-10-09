@@ -6,7 +6,8 @@
 .inner-container {
   font-size: 1rem;
   border: 1px solid black;
-  width: 15%;
-  padding: 3px;
+  min-width: 23%;
+  width: fit-content;
+  padding: 7px;
   font-weight: 600;
 }

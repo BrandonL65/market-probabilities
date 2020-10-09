@@ -532,7 +532,7 @@ const UpDaysCandleProportions = observer((props: CandleProps) => {
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
-            section={250}
+            section={350}
             total={openToLowBars.OL250}
             totalBars={props.totalUpBars}
           />

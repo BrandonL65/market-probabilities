@@ -17,19 +17,19 @@ const UpDaysCandleProportions = observer((props: CandleProps) => {
   const [closeToOpenBars, setCloseToOpenBars] = useState({} as CandleProps);
   const [openToLowBars, setOpenToLowBars] = useState({} as CandleProps);
 
-  const consoleProps = async () => {
+  const fillTables = async () => {
     let OHObject = {} as CandleProps;
     let OCObject = {} as CandleProps;
     let OLObject = {} as CandleProps;
 
-    for (let k in props) {
-      let firstTwoLetters = k.slice(0, 2);
+    for (let key in props) {
+      let firstTwoLetters = key.slice(0, 2);
       if (firstTwoLetters === "OH") {
-        OHObject = { ...OHObject, [k]: props[k] };
+        OHObject = { ...OHObject, [key]: props[key] };
       } else if (firstTwoLetters === "OC") {
-        OCObject = { ...OCObject, [k]: props[k] };
+        OCObject = { ...OCObject, [key]: props[key] };
       } else if (firstTwoLetters === "OL") {
-        OLObject = { ...OLObject, [k]: props[k] };
+        OLObject = { ...OLObject, [key]: props[key] };
       }
     }
     setHighToOpenBars(OHObject);
@@ -47,7 +47,7 @@ const UpDaysCandleProportions = observer((props: CandleProps) => {
   return (
     <div className={styles["container"]}>
       <h1>Green Candles, aka Close {">"} Open</h1>
-      <button onClick={consoleProps}>Load data into tables</button>
+      <button onClick={fillTables}>Load data into tables</button>
       <button onClick={seeState}>See state</button>
       <div className={styles["divider"]}>
         <div className={styles["range-column"]}>

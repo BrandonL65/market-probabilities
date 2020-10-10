@@ -368,9 +368,9 @@ export class DataStore {
     low: number,
     close: number
   ) => {
-    let highToOpenDifference = Math.floor((high - open) * 10000);
-    let closeToOpenDifference = Math.floor((close - open) * 10000);
-    let openToLowDifference = Math.floor((open - low) * 10000);
+    let highToOpenDifference = parseFloat(((high - open) * 10000).toFixed(2));
+    let closeToOpenDifference = parseFloat(((close - open) * 10000).toFixed(2));
+    let openToLowDifference = parseFloat(((open - low) * 10000).toFixed(2));
 
     this.upCandlesAssignProportionsForOH(highToOpenDifference);
     this.upCandlesAssignProportionsForOC(closeToOpenDifference);

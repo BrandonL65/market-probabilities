@@ -9,6 +9,7 @@ import { rootStoreContext } from "../contexts";
 const EURUSD_DATA = require("../data/EURUSD.csv");
 //GBPUSD Data from 03/29/2011 - 05/29/2020
 const GBPUSD_DATA = require("../data/GBPUSD.csv");
+const GBPUSD_DATA_TWOYEARS = require("../data/GBPUSD_NEW.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
@@ -79,8 +80,10 @@ const DataContainer = observer(() => {
     let csv: d3.DSVRowArray<string>;
     if (currency === "EURUSD") {
       csv = await d3.csv(EURUSD_DATA);
-    } else {
+    } else if (currency === "GBPUSD") {
       csv = await d3.csv(GBPUSD_DATA);
+    } else {
+      csv = await d3.csv(GBPUSD_DATA_TWOYEARS);
     }
     dataStore.rawData = csv;
     dataStore.parseData();
@@ -90,6 +93,9 @@ const DataContainer = observer(() => {
     <div>
       <Button onClick={() => loadData("EURUSD")}>Load EURUSD Data</Button>
       <Button onClick={() => loadData("GBPUSD")}>Load GBPUSD Data</Button>
+      <Button onClick={() => loadData("GBPUSD_NEW")}>
+        Load new GBPUSD Data
+      </Button>
       <DataComponentForOpenClosePercentages
         totalBars={dataStore.rawData.length}
         totalUpDays={totalUpDays}

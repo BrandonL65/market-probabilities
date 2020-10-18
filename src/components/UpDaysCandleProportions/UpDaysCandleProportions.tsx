@@ -47,8 +47,12 @@ const UpDaysCandleProportions = observer((props: CandleProps) => {
   return (
     <div className={styles["container"]}>
       <h1>Green Candles, aka Close {">"} Open</h1>
-      <button onClick={fillTables}>Load data into tables</button>
-      <button onClick={seeState}>See state</button>
+      <button className={styles["button"]} onClick={fillTables}>
+        Load data into tables
+      </button>
+      <button className={styles["button"]} onClick={seeState}>
+        See state
+      </button>
       <div className={styles["divider"]}>
         <div className={styles["range-column"]}>
           <p>Open to Close Candle Range </p>

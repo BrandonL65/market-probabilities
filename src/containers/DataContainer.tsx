@@ -91,9 +91,13 @@ const DataContainer = observer(() => {
 
   return (
     <div>
-      <Button onClick={() => loadData("EURUSD")}>Load EURUSD Data</Button>
-      <Button onClick={() => loadData("GBPUSD")}>Load GBPUSD Data</Button>
-      <Button onClick={() => loadData("GBPUSD_NEW")}>
+      <Button ghost onClick={() => loadData("EURUSD")}>
+        Load EURUSD Data
+      </Button>
+      <Button ghost onClick={() => loadData("GBPUSD")}>
+        Load GBPUSD Data
+      </Button>
+      <Button ghost onClick={() => loadData("GBPUSD_NEW")}>
         Load new GBPUSD Data
       </Button>
       <DataComponentForOpenClosePercentages

@@ -1,3 +1,6 @@
+.container > * {
+  color: white;
+}
 .container {
   margin-top: 4rem;
   border-top: 2px solid black;
@@ -13,4 +16,9 @@
 
 .range-column {
   width: 33%;
+}
+
+.button {
+  background-color: gray;
+  border-radius: 5%;
 }

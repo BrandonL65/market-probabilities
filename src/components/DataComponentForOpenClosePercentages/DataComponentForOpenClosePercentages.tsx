@@ -50,7 +50,7 @@ const DataComponentForOpenClosePercentages = observer(
     };
 
     return (
-      <div className={styles["container"]}>
+      <div className={styles["outer"]}>
         <h1>Data component for EURUSD</h1>
         <h3>Total Bars: {totalBars}</h3>
         <h3>

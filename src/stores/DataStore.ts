@@ -318,12 +318,6 @@ export class DataStore {
     OL250Plus: 0,
   };
 
-  @observable totals: number = 0;
-  @observable totals2: number = 0;
-  @observable totals3: number = 0;
-  @observable totals4: number = 0;
-  @observable closedGreen: number = 0;
-  @observable closedRed: number = 0;
   //parses ALL data by looping through the raw data
   parseData = () => {
     console.log("Parsing data from dataStore");
@@ -343,17 +337,7 @@ export class DataStore {
       if (open < close) {
         this.testCandleProportionPercentagesUpCandles(open, high, low, close);
       }
-
-      //experimental
-      let ho = parseFloat(((high - open) * 10000).toFixed(2));
-      let ol = parseFloat(((open - low) * 10000).toFixed(2));
-      let xMarksTheSpot = 20;
-      if (ho >= xMarksTheSpot) {
-        this.totals++;
-      }
     });
-    console.log(`Total days: ${this.rawData.length}`);
-    console.log(`Total: ${this.totals}`);
 
     //calculates average high-low range, assigns it
     this.averageRange = parseFloat(

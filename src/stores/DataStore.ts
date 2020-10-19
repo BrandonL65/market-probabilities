@@ -415,8 +415,9 @@ export class DataStore {
       this.averageRange = this.averageRange + (high - low) * 10000;
 
       //parsed O-C, O-H, O-L percentages for all green candles
-      if (open < close) {
+      if (close > open) {
         this.testCandleProportionPercentagesUpCandles(open, high, low, close);
+        this.testAverageOHFromDiffOL(open, high, low);
       }
     });
 
@@ -439,6 +440,50 @@ export class DataStore {
     this.upCandleAvgOpenToLow = parseFloat(
       (this.upCandleAvgOpenToLow / this.totalUpDays).toFixed(2)
     );
+  };
+
+  //assigns upCandleOHFromCorrespondingLW observable with corresponding average OH values W.R.T diff lower wick values
+  //For example, total average OH from candles w/ lower wick <= 10, 20, etc
+  testAverageOHFromDiffOL = (open: number, high: number, low: number) => {
+    let OH = parseFloat(((high - open) * 10000).toFixed(2));
+    let OL = parseFloat(((open - low) * 10000).toFixed(2));
+    if (OL <= 10) {
+      const { LW10 } = this.upCandleOHFromCorrespondingLW;
+      LW10.averageOH += OH;
+      LW10.totalUpCandlesWithThisLW++;
+    } else if (OL <= 20) {
+      const { LW20 } = this.upCandleOHFromCorrespondingLW;
+      LW20.averageOH += OH;
+      LW20.totalUpCandlesWithThisLW++;
+    } else if (OL <= 30) {
+      const { LW30 } = this.upCandleOHFromCorrespondingLW;
+      LW30.averageOH += OH;
+      LW30.totalUpCandlesWithThisLW++;
+    } else if (OL <= 40) {
+      const { LW40 } = this.upCandleOHFromCorrespondingLW;
+      LW40.averageOH += OH;
+      LW40.totalUpCandlesWithThisLW++;
+    } else if (OL <= 50) {
+      const { LW50 } = this.upCandleOHFromCorrespondingLW;
+      LW50.averageOH += OH;
+      LW50.totalUpCandlesWithThisLW++;
+    } else if (OL <= 60) {
+      const { LW60 } = this.upCandleOHFromCorrespondingLW;
+      LW60.averageOH += OH;
+      LW60.totalUpCandlesWithThisLW++;
+    } else if (OL <= 70) {
+      const { LW70 } = this.upCandleOHFromCorrespondingLW;
+      LW70.averageOH += OH;
+      LW70.totalUpCandlesWithThisLW++;
+    } else if (OL <= 80) {
+      const { LW80 } = this.upCandleOHFromCorrespondingLW;
+      LW80.averageOH += OH;
+      LW80.totalUpCandlesWithThisLW++;
+    } else if (OL > 80) {
+      const { LW80plus } = this.upCandleOHFromCorrespondingLW;
+      LW80plus.averageOH += OH;
+      LW80plus.totalUpCandlesWithThisLW++;
+    }
   };
 
   //does calculations for OC OH OL of green candles

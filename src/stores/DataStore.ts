@@ -48,7 +48,23 @@ export interface UpCandleOHFromLowerWick {
     averageOH: number;
     totalUpCandlesWithThisLW: number;
   };
-  LW80plus: {
+  LW90: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW100: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW110: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW120: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW120plus: {
     averageOH: number;
     totalUpCandlesWithThisLW: number;
   };
@@ -391,7 +407,23 @@ export class DataStore {
       averageOH: 0,
       totalUpCandlesWithThisLW: 0,
     },
-    LW80plus: {
+    LW90: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW100: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW110: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW120: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW120plus: {
       averageOH: 0,
       totalUpCandlesWithThisLW: 0,
     },
@@ -489,11 +521,26 @@ export class DataStore {
       const { LW80 } = this.upCandleOHFromCorrespondingLW;
       LW80.averageOH += OH;
       LW80.totalUpCandlesWithThisLW++;
-      console.log(OL, OH);
-    } else if (OL > 80) {
-      const { LW80plus } = this.upCandleOHFromCorrespondingLW;
-      LW80plus.averageOH += OH;
-      LW80plus.totalUpCandlesWithThisLW++;
+    } else if (OL <= 90) {
+      const { LW90 } = this.upCandleOHFromCorrespondingLW;
+      LW90.averageOH += OH;
+      LW90.totalUpCandlesWithThisLW++;
+    } else if (OL <= 100) {
+      const { LW100 } = this.upCandleOHFromCorrespondingLW;
+      LW100.averageOH += OH;
+      LW100.totalUpCandlesWithThisLW++;
+    } else if (OL <= 110) {
+      const { LW110 } = this.upCandleOHFromCorrespondingLW;
+      LW110.averageOH += OH;
+      LW110.totalUpCandlesWithThisLW++;
+    } else if (OL <= 120) {
+      const { LW120 } = this.upCandleOHFromCorrespondingLW;
+      LW120.averageOH += OH;
+      LW120.totalUpCandlesWithThisLW++;
+    } else if (OL > 120) {
+      const { LW120plus } = this.upCandleOHFromCorrespondingLW;
+      LW120plus.averageOH += OH;
+      LW120plus.totalUpCandlesWithThisLW++;
     }
   };
 

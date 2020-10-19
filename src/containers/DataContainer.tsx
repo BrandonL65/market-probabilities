@@ -84,7 +84,11 @@ const DataContainer = observer(() => {
     LW60,
     LW70,
     LW80,
-    LW80plus,
+    LW90,
+    LW100,
+    LW110,
+    LW120,
+    LW120plus,
   } = upCandleOHFromCorrespondingLW;
 
   //parses csv and loads the data into our MobX store
@@ -277,7 +281,11 @@ const DataContainer = observer(() => {
         LW60={LW60}
         LW70={LW70}
         LW80={LW80}
-        LW80plus={LW80plus}
+        LW90={LW90}
+        LW100={LW100}
+        LW110={LW110}
+        LW120={LW120}
+        LW120plus={LW120plus}
       />
     </div>
   );

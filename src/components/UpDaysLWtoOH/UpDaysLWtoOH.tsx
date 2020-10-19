@@ -4,7 +4,21 @@ import { UpCandleOHFromLowerWick } from "../../stores/DataStore";
 import CandleRangeDisplay from "../CandleRangeDisplay/CandleRangeDisplay";
 
 const UpDaysLWtoOH = observer((props: UpCandleOHFromLowerWick) => {
-  const { LW10, LW20, LW30, LW40, LW50, LW60, LW70, LW80, LW80plus } = props;
+  const {
+    LW10,
+    LW20,
+    LW30,
+    LW40,
+    LW50,
+    LW60,
+    LW70,
+    LW80,
+    LW90,
+    LW100,
+    LW110,
+    LW120,
+    LW120plus,
+  } = props;
   const getAverageNumOfBars = (accumulated: number, totalBars: number) => {
     return Math.floor(accumulated / totalBars);
   };
@@ -77,10 +91,42 @@ const UpDaysLWtoOH = observer((props: UpCandleOHFromLowerWick) => {
       />
       <CandleRangeDisplay
         identifier={"3"}
-        section={"Up days lower wick 80+"}
+        section={"Up days lower wick 90"}
         total={getAverageNumOfBars(
-          LW80plus.averageOH,
-          LW80plus.totalUpCandlesWithThisLW
+          LW90.averageOH,
+          LW90.totalUpCandlesWithThisLW
+        )}
+      />
+      <CandleRangeDisplay
+        identifier={"3"}
+        section={"Up days lower wick 100"}
+        total={getAverageNumOfBars(
+          LW100.averageOH,
+          LW100.totalUpCandlesWithThisLW
+        )}
+      />
+      <CandleRangeDisplay
+        identifier={"3"}
+        section={"Up days lower wick 110"}
+        total={getAverageNumOfBars(
+          LW110.averageOH,
+          LW110.totalUpCandlesWithThisLW
+        )}
+      />
+      <CandleRangeDisplay
+        identifier={"3"}
+        section={"Up days lower wick 120"}
+        total={getAverageNumOfBars(
+          LW120.averageOH,
+          LW120.totalUpCandlesWithThisLW
+        )}
+      />
+      <CandleRangeDisplay
+        identifier={"3"}
+        section={"Up days lower wick 120+"}
+        total={getAverageNumOfBars(
+          LW120plus.averageOH,
+          LW120plus.totalUpCandlesWithThisLW
         )}
       />
     </div>

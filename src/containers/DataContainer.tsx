@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import DataComponentForOpenClosePercentages from "../components/DataComponentForOpenClosePercentages/DataComponentForOpenClosePercentages";
 import CandleRangeComponent from "../components/CandleRangeComponent/CandleRangeComponent";
 import UpDaysCandleProportions from "../components/UpDaysCandleProportions/UpDaysCandleProportions";
+import UpDaysLWtoOH from "../components/UpDaysLWtoOH/UpDaysLWtoOH";
 import * as d3 from "d3";
 import { Button } from "antd";
 import { observer } from "mobx-react";
@@ -23,6 +24,7 @@ const DataContainer = observer(() => {
     upCandleAvgHighToOpen,
     upCandleAvgCloseToOpen,
     upCandleAvgOpenToLow,
+    upCandleOHFromCorrespondingLW,
   } = dataStore;
   const {
     upOnePlus,
@@ -72,6 +74,18 @@ const DataContainer = observer(() => {
     u250,
     u250plus,
   } = allRanges;
+
+  const {
+    LW10,
+    LW20,
+    LW30,
+    LW40,
+    LW50,
+    LW60,
+    LW70,
+    LW80,
+    LW80plus,
+  } = upCandleOHFromCorrespondingLW;
 
   //parses csv and loads the data into our MobX store
   const loadData = async (currency: string) => {
@@ -253,6 +267,17 @@ const DataContainer = observer(() => {
         OL240={candleProportionsUpCandles.OL240}
         OL250={candleProportionsUpCandles.OL250}
         OL250Plus={candleProportionsUpCandles.OL250Plus}
+      />
+      <UpDaysLWtoOH
+        LW10={LW10}
+        LW20={LW20}
+        LW30={LW30}
+        LW40={LW40}
+        LW50={LW50}
+        LW60={LW60}
+        LW70={LW70}
+        LW80={LW80}
+        LW80plus={LW80plus}
       />
     </div>
   );

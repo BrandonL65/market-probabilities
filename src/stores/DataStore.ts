@@ -427,6 +427,16 @@ export class DataStore {
     );
     //calculates average OH, OC, OL for up candle parsed data, line 419
     this.upCandleAverageRangeAssignment();
+    this.logIt();
+  };
+
+  logIt = () => {
+    for (let k in this.upCandleOHFromCorrespondingLW) {
+      let value = this.upCandleOHFromCorrespondingLW[
+        k as keyof UpCandleOHFromLowerWick
+      ];
+      console.log(k, value.averageOH / value.totalUpCandlesWithThisLW);
+    }
   };
 
   //divides the average OH OC OL ranges of up candles by total # of up candles
@@ -479,6 +489,7 @@ export class DataStore {
       const { LW80 } = this.upCandleOHFromCorrespondingLW;
       LW80.averageOH += OH;
       LW80.totalUpCandlesWithThisLW++;
+      console.log(OL, OH);
     } else if (OL > 80) {
       const { LW80plus } = this.upCandleOHFromCorrespondingLW;
       LW80plus.averageOH += OH;

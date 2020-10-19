@@ -14,6 +14,46 @@ export interface AllCloseProbabilities {
   downOnePlus: number;
 }
 
+//key is the lower wick value of Up Candle, value is average corresponding OH
+export interface UpCandleOHFromLowerWick {
+  LW10: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW20: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW30: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW40: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW50: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW60: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW70: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW80: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+  LW80plus: {
+    averageOH: number;
+    totalUpCandlesWithThisLW: number;
+  };
+}
+
 export interface CandleRangeStatistics {
   u5: number;
   u10: number;
@@ -318,6 +358,45 @@ export class DataStore {
     OL250Plus: 0,
   };
 
+  @observable upCandleOHFromCorrespondingLW: UpCandleOHFromLowerWick = {
+    LW10: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW20: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW30: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW40: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW50: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW60: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW70: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW80: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+    LW80plus: {
+      averageOH: 0,
+      totalUpCandlesWithThisLW: 0,
+    },
+  };
+
   //parses ALL data by looping through the raw data
   parseData = () => {
     console.log("Parsing data from dataStore");
@@ -381,209 +460,403 @@ export class DataStore {
   };
 
   upCandlesAssignProportionsForOH = (highToOpenPips: number) => {
-    const { candleProportionsUpCandles } = this;
-    if (highToOpenPips <= 5) {
-      candleProportionsUpCandles.OH5++;
-    } else if (highToOpenPips <= 10) {
-      candleProportionsUpCandles.OH10++;
-    } else if (highToOpenPips <= 15) {
-      candleProportionsUpCandles.OH15++;
-    } else if (highToOpenPips <= 20) {
-      candleProportionsUpCandles.OH20++;
-    } else if (highToOpenPips <= 25) {
-      candleProportionsUpCandles.OH25++;
-    } else if (highToOpenPips <= 30) {
-      candleProportionsUpCandles.OH30++;
-    } else if (highToOpenPips <= 35) {
-      candleProportionsUpCandles.OH35++;
-    } else if (highToOpenPips <= 40) {
-      candleProportionsUpCandles.OH40++;
-    } else if (highToOpenPips <= 45) {
-      candleProportionsUpCandles.OH45++;
-    } else if (highToOpenPips <= 50) {
-      candleProportionsUpCandles.OH50++;
-    } else if (highToOpenPips <= 55) {
-      candleProportionsUpCandles.OH55++;
-    } else if (highToOpenPips <= 60) {
-      candleProportionsUpCandles.OH60++;
-    } else if (highToOpenPips <= 70) {
-      candleProportionsUpCandles.OH70++;
-    } else if (highToOpenPips <= 80) {
-      candleProportionsUpCandles.OH80++;
-    } else if (highToOpenPips <= 90) {
-      candleProportionsUpCandles.OH90++;
-    } else if (highToOpenPips <= 100) {
-      candleProportionsUpCandles.OH100++;
-    } else if (highToOpenPips <= 110) {
-      candleProportionsUpCandles.OH110++;
-    } else if (highToOpenPips <= 120) {
-      candleProportionsUpCandles.OH120++;
-    } else if (highToOpenPips <= 130) {
-      candleProportionsUpCandles.OH130++;
-    } else if (highToOpenPips <= 140) {
-      candleProportionsUpCandles.OH140++;
-    } else if (highToOpenPips <= 150) {
-      candleProportionsUpCandles.OH150++;
-    } else if (highToOpenPips <= 160) {
-      candleProportionsUpCandles.OH160++;
-    } else if (highToOpenPips <= 170) {
-      candleProportionsUpCandles.OH170++;
-    } else if (highToOpenPips <= 180) {
-      candleProportionsUpCandles.OH180++;
-    } else if (highToOpenPips <= 190) {
-      candleProportionsUpCandles.OH190++;
-    } else if (highToOpenPips <= 200) {
-      candleProportionsUpCandles.OH200++;
-    } else if (highToOpenPips <= 210) {
-      candleProportionsUpCandles.OH210++;
-    } else if (highToOpenPips <= 220) {
-      candleProportionsUpCandles.OH220++;
-    } else if (highToOpenPips <= 230) {
-      candleProportionsUpCandles.OH230++;
-    } else if (highToOpenPips <= 240) {
-      candleProportionsUpCandles.OH240++;
-    } else if (highToOpenPips <= 250) {
-      candleProportionsUpCandles.OH250++;
-    } else if (highToOpenPips > 250) {
-      candleProportionsUpCandles.OH250plus++;
-    }
+    this.assignProportions(highToOpenPips, "OH");
   };
 
   upCandlesAssignProportionsForOC = (closeToOpenPips: number) => {
-    const { candleProportionsUpCandles } = this;
-    if (closeToOpenPips <= 5) {
-      candleProportionsUpCandles.OC5++;
-    } else if (closeToOpenPips <= 10) {
-      candleProportionsUpCandles.OC10++;
-    } else if (closeToOpenPips <= 15) {
-      candleProportionsUpCandles.OC15++;
-    } else if (closeToOpenPips <= 20) {
-      candleProportionsUpCandles.OC20++;
-    } else if (closeToOpenPips <= 25) {
-      candleProportionsUpCandles.OC25++;
-    } else if (closeToOpenPips <= 30) {
-      candleProportionsUpCandles.OC30++;
-    } else if (closeToOpenPips <= 35) {
-      candleProportionsUpCandles.OC35++;
-    } else if (closeToOpenPips <= 40) {
-      candleProportionsUpCandles.OC40++;
-    } else if (closeToOpenPips <= 45) {
-      candleProportionsUpCandles.OC45++;
-    } else if (closeToOpenPips <= 50) {
-      candleProportionsUpCandles.OC50++;
-    } else if (closeToOpenPips <= 55) {
-      candleProportionsUpCandles.OC55++;
-    } else if (closeToOpenPips <= 60) {
-      candleProportionsUpCandles.OC60++;
-    } else if (closeToOpenPips <= 70) {
-      candleProportionsUpCandles.OC70++;
-    } else if (closeToOpenPips <= 80) {
-      candleProportionsUpCandles.OC80++;
-    } else if (closeToOpenPips <= 90) {
-      candleProportionsUpCandles.OC90++;
-    } else if (closeToOpenPips <= 100) {
-      candleProportionsUpCandles.OC100++;
-    } else if (closeToOpenPips <= 110) {
-      candleProportionsUpCandles.OC110++;
-    } else if (closeToOpenPips <= 120) {
-      candleProportionsUpCandles.OC120++;
-    } else if (closeToOpenPips <= 130) {
-      candleProportionsUpCandles.OC130++;
-    } else if (closeToOpenPips <= 140) {
-      candleProportionsUpCandles.OC140++;
-    } else if (closeToOpenPips <= 150) {
-      candleProportionsUpCandles.OC150++;
-    } else if (closeToOpenPips <= 160) {
-      candleProportionsUpCandles.OC160++;
-    } else if (closeToOpenPips <= 170) {
-      candleProportionsUpCandles.OC170++;
-    } else if (closeToOpenPips <= 180) {
-      candleProportionsUpCandles.OC180++;
-    } else if (closeToOpenPips <= 190) {
-      candleProportionsUpCandles.OC190++;
-    } else if (closeToOpenPips <= 200) {
-      candleProportionsUpCandles.OC200++;
-    } else if (closeToOpenPips <= 210) {
-      candleProportionsUpCandles.OC210++;
-    } else if (closeToOpenPips <= 220) {
-      candleProportionsUpCandles.OC220++;
-    } else if (closeToOpenPips <= 230) {
-      candleProportionsUpCandles.OC230++;
-    } else if (closeToOpenPips <= 240) {
-      candleProportionsUpCandles.OC240++;
-    } else if (closeToOpenPips <= 250) {
-      candleProportionsUpCandles.OC250++;
-    } else if (closeToOpenPips > 250) {
-      candleProportionsUpCandles.OC250Plus++;
-    }
+    this.assignProportions(closeToOpenPips, "OC");
   };
 
   upCandlesAssignProportionsForOL = (openToLowPips: number) => {
+    this.assignProportions(openToLowPips, "OL");
+  };
+
+  assignProportions = (range: number, whichProportion: string) => {
     const { candleProportionsUpCandles } = this;
-    if (openToLowPips <= 5) {
-      candleProportionsUpCandles.OL5++;
-    } else if (openToLowPips <= 10) {
-      candleProportionsUpCandles.OL10++;
-    } else if (openToLowPips <= 15) {
-      candleProportionsUpCandles.OL15++;
-    } else if (openToLowPips <= 20) {
-      candleProportionsUpCandles.OL20++;
-    } else if (openToLowPips <= 25) {
-      candleProportionsUpCandles.OL25++;
-    } else if (openToLowPips <= 30) {
-      candleProportionsUpCandles.OL30++;
-    } else if (openToLowPips <= 35) {
-      candleProportionsUpCandles.OL35++;
-    } else if (openToLowPips <= 40) {
-      candleProportionsUpCandles.OL40++;
-    } else if (openToLowPips <= 45) {
-      candleProportionsUpCandles.OL45++;
-    } else if (openToLowPips <= 50) {
-      candleProportionsUpCandles.OL50++;
-    } else if (openToLowPips <= 55) {
-      candleProportionsUpCandles.OL55++;
-    } else if (openToLowPips <= 60) {
-      candleProportionsUpCandles.OL60++;
-    } else if (openToLowPips <= 70) {
-      candleProportionsUpCandles.OL70++;
-    } else if (openToLowPips <= 80) {
-      candleProportionsUpCandles.OL80++;
-    } else if (openToLowPips <= 90) {
-      candleProportionsUpCandles.OL90++;
-    } else if (openToLowPips <= 100) {
-      candleProportionsUpCandles.OL100++;
-    } else if (openToLowPips <= 110) {
-      candleProportionsUpCandles.OL110++;
-    } else if (openToLowPips <= 120) {
-      candleProportionsUpCandles.OL120++;
-    } else if (openToLowPips <= 130) {
-      candleProportionsUpCandles.OL130++;
-    } else if (openToLowPips <= 140) {
-      candleProportionsUpCandles.OL140++;
-    } else if (openToLowPips <= 150) {
-      candleProportionsUpCandles.OL150++;
-    } else if (openToLowPips <= 160) {
-      candleProportionsUpCandles.OL160++;
-    } else if (openToLowPips <= 170) {
-      candleProportionsUpCandles.OL170++;
-    } else if (openToLowPips <= 180) {
-      candleProportionsUpCandles.OL180++;
-    } else if (openToLowPips <= 190) {
-      candleProportionsUpCandles.OL190++;
-    } else if (openToLowPips <= 200) {
-      candleProportionsUpCandles.OL200++;
-    } else if (openToLowPips <= 210) {
-      candleProportionsUpCandles.OL210++;
-    } else if (openToLowPips <= 220) {
-      candleProportionsUpCandles.OL220++;
-    } else if (openToLowPips <= 230) {
-      candleProportionsUpCandles.OL230++;
-    } else if (openToLowPips <= 240) {
-      candleProportionsUpCandles.OL240++;
-    } else if (openToLowPips <= 250) {
-      candleProportionsUpCandles.OL250++;
-    } else if (openToLowPips > 250) {
-      candleProportionsUpCandles.OL250Plus++;
+    if (range <= 5) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH5++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC5++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL5++;
+          break;
+      }
+    } else if (range <= 10) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH10++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC10++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL10++;
+          break;
+      }
+    } else if (range <= 15) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH15++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC15++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL15++;
+          break;
+      }
+    } else if (range <= 20) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH20++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC20++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL20++;
+          break;
+      }
+    } else if (range <= 25) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH25++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC25++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL25++;
+          break;
+      }
+    } else if (range <= 30) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH30++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC30++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL30++;
+          break;
+      }
+    } else if (range <= 35) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH35++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC35++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL35++;
+          break;
+      }
+    } else if (range <= 40) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH40++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC40++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL40++;
+          break;
+      }
+    } else if (range <= 45) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH45++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC45++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL45++;
+          break;
+      }
+    } else if (range <= 50) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH50++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC50++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL50++;
+          break;
+      }
+    } else if (range <= 55) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH55++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC55++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL55++;
+          break;
+      }
+    } else if (range <= 60) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH60++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC60++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL60++;
+          break;
+      }
+    } else if (range <= 70) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH70++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC70++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL70++;
+          break;
+      }
+    } else if (range <= 80) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH80++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC80++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL80++;
+          break;
+      }
+    } else if (range <= 90) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH90++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC90++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL90++;
+          break;
+      }
+    } else if (range <= 100) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH100++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC100++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL100++;
+          break;
+      }
+    } else if (range <= 110) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH110++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC110++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL110++;
+          break;
+      }
+    } else if (range <= 120) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH120++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC120++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL120++;
+          break;
+      }
+    } else if (range <= 130) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH130++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC130++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL130++;
+          break;
+      }
+    } else if (range <= 140) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH140++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC140++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL140++;
+          break;
+      }
+    } else if (range <= 150) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH150++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC150++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL150++;
+          break;
+      }
+    } else if (range <= 160) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH160++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC160++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL160++;
+          break;
+      }
+    } else if (range <= 170) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH170++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC170++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL170++;
+          break;
+      }
+    } else if (range <= 180) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH180++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC180++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL180++;
+          break;
+      }
+    } else if (range <= 190) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH190++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC190++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL190++;
+          break;
+      }
+    } else if (range <= 200) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH200++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC200++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL200++;
+          break;
+      }
+    } else if (range <= 210) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH210++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC210++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL210++;
+          break;
+      }
+    } else if (range <= 220) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH220++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC220++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL220++;
+          break;
+      }
+    } else if (range <= 230) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH230++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC230++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL230++;
+          break;
+      }
+    } else if (range <= 240) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH240++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC240++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL240++;
+          break;
+      }
+    } else if (range <= 250) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH250++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC250++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL250++;
+          break;
+      }
+    } else if (range > 250) {
+      switch (whichProportion) {
+        case "OH":
+          candleProportionsUpCandles.OH250plus++;
+          break;
+        case "OC":
+          candleProportionsUpCandles.OC250Plus++;
+          break;
+        case "OL":
+          candleProportionsUpCandles.OL250Plus++;
+          break;
+      }
     }
   };
 

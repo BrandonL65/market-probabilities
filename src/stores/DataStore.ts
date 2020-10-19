@@ -459,6 +459,18 @@ export class DataStore {
     this.upCandleAvgOpenToLow += openToLowDifference;
   };
 
+  upCandlesAssignProportionsForOH = (highToOpenPips: number) => {
+    this.assignProportions(highToOpenPips, "OH");
+  };
+
+  upCandlesAssignProportionsForOC = (closeToOpenPips: number) => {
+    this.assignProportions(closeToOpenPips, "OC");
+  };
+
+  upCandlesAssignProportionsForOL = (openToLowPips: number) => {
+    this.assignProportions(openToLowPips, "OL");
+  };
+
   assignProportions = (range: number, whichProportion: string) => {
     const { candleProportionsUpCandles } = this;
     if (range <= 5) {
@@ -846,18 +858,6 @@ export class DataStore {
           break;
       }
     }
-  };
-
-  upCandlesAssignProportionsForOH = (highToOpenPips: number) => {
-    this.assignProportions(highToOpenPips, "OH");
-  };
-
-  upCandlesAssignProportionsForOC = (closeToOpenPips: number) => {
-    this.assignProportions(closeToOpenPips, "OC");
-  };
-
-  upCandlesAssignProportionsForOL = (openToLowPips: number) => {
-    this.assignProportions(openToLowPips, "OL");
   };
 
   //test probabilities to close within 0.25% "zones" using close price relative to open

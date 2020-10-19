@@ -409,7 +409,9 @@ export class DataStore {
 
       //calculates what percentile the bar closed in, like 0.25% up, etc
       this.testClosingZone(open, close, change);
+      //calculates the total candle range from High to Low
       this.testCandleRange(high, low);
+      //used later to calculate an average range at the end
       this.averageRange = this.averageRange + (high - low) * 10000;
 
       //parsed O-C, O-H, O-L percentages for all green candles
@@ -418,11 +420,11 @@ export class DataStore {
       }
     });
 
-    //calculates average high-low range, assigns it
+    //calculates average high-low range, assigns it from line 415
     this.averageRange = parseFloat(
       (this.averageRange / this.rawData.length).toFixed(2)
     );
-
+    //calculates average OH, OC, OL for up candle parsed data, line 419
     this.upCandleAverageRangeAssignment();
   };
 
@@ -437,7 +439,6 @@ export class DataStore {
     this.upCandleAvgOpenToLow = parseFloat(
       (this.upCandleAvgOpenToLow / this.totalUpDays).toFixed(2)
     );
-    console.log(this.upCandleAvgHighToOpen, this.upCandleAvgOpenToLow);
   };
 
   //does calculations for OC OH OL of green candles

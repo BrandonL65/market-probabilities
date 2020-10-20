@@ -22,9 +22,12 @@ const UpDaysLWtoOH = observer((props: UpCandleOHFromLowerWick) => {
   const getAverageNumOfBars = (accumulated: number, totalBars: number) => {
     return Math.floor(accumulated / totalBars);
   };
+
   return (
     <div>
-      <h1>Up Days OH compared to Lower Wick Ranges</h1>
+      <h1 style={{ color: "white" }}>
+        Up Days OH compared to Lower Wick Ranges
+      </h1>
       <CandleRangeDisplay
         identifier={"3"}
         section={"Up days lower wick 10"}

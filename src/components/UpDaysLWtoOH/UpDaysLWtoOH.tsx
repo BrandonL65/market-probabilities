@@ -117,7 +117,7 @@ const UpDaysLWtoOH = observer((props: UpDaysLWtoOHProps) => {
       />
       <CandleRangeDisplay
         identifier={"3"}
-        section={"Up days LW 90"}
+        section={"Up days lower wick 90"}
         total={LW90.totalUpCandlesWithThisLW}
         totalBars={totalUpBars}
         OHfromCorrespondingLW={getAverageNumOfBars(

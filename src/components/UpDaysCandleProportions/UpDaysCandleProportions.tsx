@@ -58,161 +58,193 @@ const UpDaysCandleProportions = observer((props: CandleProps) => {
           <p>Open to Close Candle Range </p>
           <p>Average Range: {props.avgOC}</p>
           <CandleRangeDisplay
+            identifier={"1"}
             section={5}
             total={closeToOpenBars.OC5}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={10}
             total={closeToOpenBars.OC10}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={15}
             total={closeToOpenBars.OC15}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={20}
             total={closeToOpenBars.OC20}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={25}
             total={closeToOpenBars.OC25}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={30}
             total={closeToOpenBars.OC30}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={35}
             total={closeToOpenBars.OC35}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={40}
             total={closeToOpenBars.OC40}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={45}
             total={closeToOpenBars.OC45}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={50}
             total={closeToOpenBars.OC50}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={55}
             total={closeToOpenBars.OC55}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={60}
             total={closeToOpenBars.OC60}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={70}
             total={closeToOpenBars.OC70}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={80}
             total={closeToOpenBars.OC80}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={90}
             total={closeToOpenBars.OC90}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={100}
             total={closeToOpenBars.OC100}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={110}
             total={closeToOpenBars.OC110}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={120}
             total={closeToOpenBars.OC120}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={130}
             total={closeToOpenBars.OC130}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={140}
             total={closeToOpenBars.OC140}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={150}
             total={closeToOpenBars.OC150}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={160}
             total={closeToOpenBars.OC160}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={170}
             total={closeToOpenBars.OC170}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={180}
             total={closeToOpenBars.OC180}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={190}
             total={closeToOpenBars.OC190}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={200}
             total={closeToOpenBars.OC200}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={210}
             total={closeToOpenBars.OC210}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={220}
             total={closeToOpenBars.OC220}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={230}
             total={closeToOpenBars.OC230}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={240}
             total={closeToOpenBars.OC240}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={250}
             total={closeToOpenBars.OC250}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={"250+"}
             total={closeToOpenBars.OC250plus}
             totalBars={props.totalUpBars}
@@ -222,161 +254,193 @@ const UpDaysCandleProportions = observer((props: CandleProps) => {
           <p>Open to High Candle Range</p>
           <p> Average Range: {props.avgOH}</p>
           <CandleRangeDisplay
+            identifier={"1"}
             section={5}
             total={highToOpenBars.OH5}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={10}
             total={highToOpenBars.OH10}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={15}
             total={highToOpenBars.OH15}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={20}
             total={highToOpenBars.OH20}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={25}
             total={highToOpenBars.OH25}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={30}
             total={highToOpenBars.OH30}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={35}
             total={highToOpenBars.OH35}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={40}
             total={highToOpenBars.OH40}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={45}
             total={highToOpenBars.OH45}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={50}
             total={highToOpenBars.OH50}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={55}
             total={highToOpenBars.OH55}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={60}
             total={highToOpenBars.OH60}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={70}
             total={highToOpenBars.OH70}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={80}
             total={highToOpenBars.OH80}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={90}
             total={highToOpenBars.OH90}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={100}
             total={highToOpenBars.OH100}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={110}
             total={highToOpenBars.OH110}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={120}
             total={highToOpenBars.OH120}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={130}
             total={highToOpenBars.OH130}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={140}
             total={highToOpenBars.OH140}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={150}
             total={highToOpenBars.OH150}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={160}
             total={highToOpenBars.OH160}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={170}
             total={highToOpenBars.OH170}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={180}
             total={highToOpenBars.OH180}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={190}
             total={highToOpenBars.OH190}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={200}
             total={highToOpenBars.OH200}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={210}
             total={highToOpenBars.OH210}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={220}
             total={highToOpenBars.OH220}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={230}
             total={highToOpenBars.OH230}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={240}
             total={highToOpenBars.OH240}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={250}
             total={highToOpenBars.OH250}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={"250+"}
             total={highToOpenBars.OH250plus}
             totalBars={props.totalUpBars}
@@ -386,161 +450,193 @@ const UpDaysCandleProportions = observer((props: CandleProps) => {
           <p>Open to Low Candle Range</p>
           <p>Average Range: {props.avgOL}</p>
           <CandleRangeDisplay
+            identifier={"1"}
             section={5}
             total={openToLowBars.OL5}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={10}
             total={openToLowBars.OL10}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={15}
             total={openToLowBars.OL15}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={20}
             total={openToLowBars.OL20}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={25}
             total={openToLowBars.OL25}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={30}
             total={openToLowBars.OL30}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={35}
             total={openToLowBars.OL35}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={40}
             total={openToLowBars.OL40}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={45}
             total={openToLowBars.OL45}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={50}
             total={openToLowBars.OL50}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={55}
             total={openToLowBars.OL55}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={60}
             total={openToLowBars.OL60}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={70}
             total={openToLowBars.OL70}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={80}
             total={openToLowBars.OL80}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={90}
             total={openToLowBars.OL90}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={100}
             total={openToLowBars.OL100}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={110}
             total={openToLowBars.OL110}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={120}
             total={openToLowBars.OL120}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={130}
             total={openToLowBars.OL130}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={140}
             total={openToLowBars.OL140}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={150}
             total={openToLowBars.OL150}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={160}
             total={openToLowBars.OL160}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={170}
             total={openToLowBars.OL170}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={180}
             total={openToLowBars.OL180}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={190}
             total={openToLowBars.OL190}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={200}
             total={openToLowBars.OL200}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={210}
             total={openToLowBars.OL210}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={220}
             total={openToLowBars.OL220}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={230}
             total={openToLowBars.OL230}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={240}
             total={openToLowBars.OL240}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={250}
             total={openToLowBars.OL250}
             totalBars={props.totalUpBars}
           />
           <CandleRangeDisplay
+            identifier={"1"}
             section={"250+"}
             total={openToLowBars.OL250plus}
             totalBars={props.totalUpBars}

@@ -7,6 +7,7 @@ interface CandleRangeDisplayProps {
   section: number | string;
   total: number;
   totalBars?: number;
+  OHfromCorrespondingLW?: number;
 }
 
 const CandleRangeDisplay = observer((props: CandleRangeDisplayProps) => {
@@ -15,23 +16,35 @@ const CandleRangeDisplay = observer((props: CandleRangeDisplayProps) => {
     const { total, totalBars } = props;
     return ((total / totalBars!) * 100).toFixed(1);
   };
-  const symbolIdentifier = () => {
-    if (props.identifier === "1") {
-      return "bars";
-    } else {
-      return "pips";
+
+  const displayOHtoLW = () => {
+    if (props.OHfromCorrespondingLW || props.OHfromCorrespondingLW === 0) {
+      return (
+        <div className={styles["inner-container"]}>
+          OH Avg: {props.OHfromCorrespondingLW} pips
+        </div>
+      );
     }
+    return null;
   };
+
+  if (props.identifier === "3") {
+    console.log(props.total, props.OHfromCorrespondingLW);
+  }
+
   return (
     <div className={styles["container"]}>
       <div className={styles["inner-container"]}>{props.section} pips</div>
-      <div className={styles["inner-container"]}>
-        {" "}
-        {props.total} {symbolIdentifier()}
-      </div>
+      <div className={styles["inner-container"]}> {props.total} bars</div>
       {props.totalBars ? (
         <div className={styles["inner-container"]}>{getPercentage()} %</div>
       ) : null}
+      {/* {props.OHfromCorrespondingLW ? (
+        <div className={styles["inner-container"]}>
+          OH: Avg {props.OHfromCorrespondingLW} pips{" "}
+        </div>
+      ) : null} */}
+      {displayOHtoLW()}
     </div>
   );
 });

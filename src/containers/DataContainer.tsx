@@ -273,6 +273,7 @@ const DataContainer = observer(() => {
         OL250Plus={candleProportionsUpCandles.OL250Plus}
       />
       <UpDaysLWtoOH
+        totalUpBars={totalUpDays}
         LW10={LW10}
         LW20={LW20}
         LW30={LW30}

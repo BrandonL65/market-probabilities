@@ -11,6 +11,7 @@ const EURUSD_DATA = require("../data/EURUSD.csv");
 //GBPUSD Data from 03/29/2011 - 05/29/2020
 const GBPUSD_DATA = require("../data/GBPUSD.csv");
 const GBPUSD_DATA_TWOYEARS = require("../data/GBPUSD_NEW.csv");
+const GBPUSD_DATA_WEEKLY_10YRS = require("../data/GBPUSD_WEEKLY_10YRS.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
@@ -100,6 +101,8 @@ const DataContainer = observer(() => {
       csv = await d3.csv(EURUSD_DATA);
     } else if (currency === "GBPUSD") {
       csv = await d3.csv(GBPUSD_DATA);
+    } else if (currency === "GBPUSD_W_10") {
+      csv = await d3.csv(GBPUSD_DATA_WEEKLY_10YRS);
     } else {
       csv = await d3.csv(GBPUSD_DATA_TWOYEARS);
     }
@@ -117,6 +120,9 @@ const DataContainer = observer(() => {
       </Button>
       <Button ghost onClick={() => loadData("GBPUSD_NEW")}>
         Load new GBPUSD Data
+      </Button>
+      <Button ghost onClick={() => loadData("GBPUSD_W_10")}>
+        Load GBPUSD Weekly 10Years
       </Button>
       <DataComponentForOpenClosePercentages
         totalBars={dataStore.rawData.length}
@@ -238,7 +244,7 @@ const DataContainer = observer(() => {
         OC230={candleProportionsUpCandles.OC230}
         OC240={candleProportionsUpCandles.OC240}
         OC250={candleProportionsUpCandles.OC250}
-        OC250Plus={candleProportionsUpCandles.OC250Plus}
+        OC250plus={candleProportionsUpCandles.OC250plus}
         OL5={candleProportionsUpCandles.OL5}
         OL10={candleProportionsUpCandles.OL10}
         OL15={candleProportionsUpCandles.OL15}
@@ -270,7 +276,7 @@ const DataContainer = observer(() => {
         OL230={candleProportionsUpCandles.OL230}
         OL240={candleProportionsUpCandles.OL240}
         OL250={candleProportionsUpCandles.OL250}
-        OL250Plus={candleProportionsUpCandles.OL250Plus}
+        OL250plus={candleProportionsUpCandles.OL250plus}
       />
       <UpDaysLWtoOH
         totalUpBars={totalUpDays}

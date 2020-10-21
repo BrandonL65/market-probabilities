@@ -28,8 +28,8 @@ const CandleRangeDisplay = observer((props: CandleRangeDisplayProps) => {
     return null;
   };
 
-  if (props.identifier === "3") {
-    console.log(props.total, props.OHfromCorrespondingLW);
+  if (props.section === "250+") {
+    console.log(props);
   }
 
   return (
@@ -39,11 +39,6 @@ const CandleRangeDisplay = observer((props: CandleRangeDisplayProps) => {
       {props.totalBars ? (
         <div className={styles["inner-container"]}>{getPercentage()} %</div>
       ) : null}
-      {/* {props.OHfromCorrespondingLW ? (
-        <div className={styles["inner-container"]}>
-          OH: Avg {props.OHfromCorrespondingLW} pips{" "}
-        </div>
-      ) : null} */}
       {displayOHtoLW()}
     </div>
   );

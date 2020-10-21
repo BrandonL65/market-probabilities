@@ -28,10 +28,6 @@ const CandleRangeDisplay = observer((props: CandleRangeDisplayProps) => {
     return null;
   };
 
-  if (props.section === "250+") {
-    console.log(props);
-  }
-
   return (
     <div className={styles["container"]}>
       <div className={styles["inner-container"]}>{props.section} pips</div>

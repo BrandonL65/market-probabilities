@@ -171,7 +171,7 @@ export interface CandleProportions {
   OC230: number;
   OC240: number;
   OC250: number;
-  OC250Plus: number;
+  OC250plus: number;
   OL5: number;
   OL10: number;
   OL15: number;
@@ -203,7 +203,7 @@ export interface CandleProportions {
   OL230: number;
   OL240: number;
   OL250: number;
-  OL250Plus: number;
+  OL250plus: number;
 }
 
 export class DataStore {
@@ -339,7 +339,7 @@ export class DataStore {
     OC230: 0,
     OC240: 0,
     OC250: 0,
-    OC250Plus: 0,
+    OC250plus: 0,
     OL5: 0,
     OL10: 0,
     OL15: 0,
@@ -371,7 +371,7 @@ export class DataStore {
     OL230: 0,
     OL240: 0,
     OL250: 0,
-    OL250Plus: 0,
+    OL250plus: 0,
   };
 
   @observable upCandleOHFromCorrespondingLW: UpCandleOHFromLowerWick = {
@@ -945,10 +945,10 @@ export class DataStore {
           candleProportionsUpCandles.OH250plus++;
           break;
         case "OC":
-          candleProportionsUpCandles.OC250Plus++;
+          candleProportionsUpCandles.OC250plus++;
           break;
         case "OL":
-          candleProportionsUpCandles.OL250Plus++;
+          candleProportionsUpCandles.OL250plus++;
           break;
       }
     }

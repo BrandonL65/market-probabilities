@@ -40,22 +40,22 @@ const PercentagesComponent = observer((props: PercentagesComponentProps) => {
         percentage={getPercentageForClose(upOnePlus, totalBars)}
       />
       <SinglePercentage
-        title={"0.75% - 1%"}
+        title={">0.75% - 1%"}
         totalBars={upSeventyFiveToOne}
         percentage={getPercentageForClose(upSeventyFiveToOne, totalBars)}
       />
       <SinglePercentage
-        title={"0.5% - 0.75%"}
+        title={">0.5% - 0.75%"}
         totalBars={upFiftyToSeventyFive}
         percentage={getPercentageForClose(upFiftyToSeventyFive, totalBars)}
       />
       <SinglePercentage
-        title={"0.25% - 0.5%"}
+        title={">0.25% - 0.5%"}
         totalBars={upTwentyFiveToFifty}
         percentage={getPercentageForClose(upTwentyFiveToFifty, totalBars)}
       />
       <SinglePercentage
-        title={"0% - 0.25%"}
+        title={" >0% - 0.25%"}
         totalBars={upZeroToTwentyFive}
         percentage={getPercentageForClose(upZeroToTwentyFive, totalBars)}
       />
@@ -65,17 +65,17 @@ const PercentagesComponent = observer((props: PercentagesComponentProps) => {
         percentage={getPercentageForClose(downZeroToTwentyFive, totalBars)}
       />
       <SinglePercentage
-        title={"-0.5% - 0.25%"}
+        title={"-0.5% - <-0.25%"}
         totalBars={downTwentyFiveToFifty}
         percentage={getPercentageForClose(downTwentyFiveToFifty, totalBars)}
       />
       <SinglePercentage
-        title={"-0.75% - -0.5%"}
+        title={"-0.75% - <-0.5%"}
         totalBars={downFiftyToSeventyFive}
         percentage={getPercentageForClose(downFiftyToSeventyFive, totalBars)}
       />
       <SinglePercentage
-        title={"-1% - -0.75%"}
+        title={"-1% - <-0.75%"}
         totalBars={downSeventyFiveToOne}
         percentage={getPercentageForClose(downSeventyFiveToOne, totalBars)}
       />

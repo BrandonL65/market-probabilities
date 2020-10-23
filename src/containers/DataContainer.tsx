@@ -11,6 +11,8 @@ const EURUSD_DATA = require("../data/EURUSD.csv");
 //GBPUSD Data from 03/29/2011 - 05/29/2020
 const GBPUSD_DATA = require("../data/GBPUSD.csv");
 const GBPUSD_DATA_TWOYEARS = require("../data/GBPUSD_NEW.csv");
+const GBPUSD_DATA_WEEKLY_10YRS = require("../data/GBPUSD_WEEKLY_10YRS.csv");
+const GBPUSD_2020 = require("../data/GBPUSD_2020.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
@@ -96,12 +98,21 @@ const DataContainer = observer(() => {
     console.log("Loading data...");
     dataStore.reset();
     let csv: d3.DSVRowArray<string>;
-    if (currency === "EURUSD") {
-      csv = await d3.csv(EURUSD_DATA);
-    } else if (currency === "GBPUSD") {
-      csv = await d3.csv(GBPUSD_DATA);
-    } else {
-      csv = await d3.csv(GBPUSD_DATA_TWOYEARS);
+    switch (currency) {
+      case "EURUSD":
+        csv = await d3.csv(EURUSD_DATA);
+        break;
+      case "GBPUSD":
+        csv = await d3.csv(GBPUSD_DATA);
+        break;
+      case "GBPUSD_DATA_TWO_YEARS":
+        csv = await d3.csv(GBPUSD_DATA_TWOYEARS);
+        break;
+      case "GBPUSD_W_10":
+        csv = await d3.csv(GBPUSD_DATA_WEEKLY_10YRS);
+        break;
+      default:
+        csv = await d3.csv(GBPUSD_2020);
     }
     dataStore.rawData = csv;
     dataStore.parseData();
@@ -115,8 +126,14 @@ const DataContainer = observer(() => {
       <Button ghost onClick={() => loadData("GBPUSD")}>
         Load GBPUSD Data
       </Button>
-      <Button ghost onClick={() => loadData("GBPUSD_NEW")}>
+      <Button ghost onClick={() => loadData("GBPUSD_DATA_TWO_YEARS")}>
         Load new GBPUSD Data
+      </Button>
+      <Button ghost onClick={() => loadData("GBPUSD_W_10")}>
+        Load GBPUSD Weekly 10Years Data
+      </Button>
+      <Button ghost onClick={() => loadData("GBPUSD_2020")}>
+        Load GBPUSD 2020 Data
       </Button>
       <DataComponentForOpenClosePercentages
         totalBars={dataStore.rawData.length}
@@ -238,7 +255,7 @@ const DataContainer = observer(() => {
         OC230={candleProportionsUpCandles.OC230}
         OC240={candleProportionsUpCandles.OC240}
         OC250={candleProportionsUpCandles.OC250}
-        OC250Plus={candleProportionsUpCandles.OC250Plus}
+        OC250plus={candleProportionsUpCandles.OC250plus}
         OL5={candleProportionsUpCandles.OL5}
         OL10={candleProportionsUpCandles.OL10}
         OL15={candleProportionsUpCandles.OL15}
@@ -270,7 +287,7 @@ const DataContainer = observer(() => {
         OL230={candleProportionsUpCandles.OL230}
         OL240={candleProportionsUpCandles.OL240}
         OL250={candleProportionsUpCandles.OL250}
-        OL250Plus={candleProportionsUpCandles.OL250Plus}
+        OL250plus={candleProportionsUpCandles.OL250plus}
       />
       <UpDaysLWtoOH
         totalUpBars={totalUpDays}

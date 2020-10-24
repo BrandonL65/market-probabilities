@@ -305,6 +305,10 @@ const DataContainer = observer(() => {
         LW120={LW120}
         LW120plus={LW120plus}
       />
+      <div>
+        Here will be a div that contains the % of bars that close red/green for
+        any given LW range
+      </div>
     </div>
   );
 });

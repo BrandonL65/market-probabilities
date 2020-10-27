@@ -451,8 +451,24 @@ export class DataStore {
         this.testCandleProportionPercentagesUpCandles(open, high, low, close);
         this.testAverageOHFromDiffOL(open, high, low);
       }
+
+      //experimental
+      let pipOfLW = parseFloat(((open - low) * 10000).toFixed(1));
+      let pipOfUW = parseFloat(((high - open) * 10000).toFixed(1));
+      let upBody = parseFloat(((close - open) * 10000).toFixed(1));
+
+      if (pipOfUW >= 40) {
+        if (close < open) {
+          this.hitCertainPips++;
+        } else {
+          this.hit10Higher++;
+        }
+      }
     });
 
+    console.log(this.totalUpDays, this.totalDownDays);
+    console.log(this.hitCertainPips / this.totalDownDays);
+    console.log(this.hit10Higher / this.totalUpDays);
     //calculates average high-low range, assigns it from line 415
     this.averageRange = parseFloat(
       (this.averageRange / this.rawData.length).toFixed(2)
@@ -460,6 +476,9 @@ export class DataStore {
     //calculates average OH, OC, OL for up candle parsed data, line 419
     this.upCandleAverageRangeAssignment();
   };
+
+  @observable hitCertainPips = 0;
+  @observable hit10Higher = 0;
 
   //divides the average OH OC OL ranges of up candles by total # of up candles
   upCandleAverageRangeAssignment = () => {

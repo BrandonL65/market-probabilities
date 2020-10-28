@@ -457,18 +457,23 @@ export class DataStore {
       let pipOfUW = parseFloat(((high - open) * 10000).toFixed(1));
       let upBody = parseFloat(((close - open) * 10000).toFixed(1));
 
-      if (pipOfUW >= 40) {
-        if (close < open) {
+      if (open > close) {
+        if (pipOfUW >= 40) {
           this.hitCertainPips++;
-        } else {
-          this.hit10Higher++;
+          if (pipOfUW >= 50) {
+            this.hit10Higher++;
+          }
         }
       }
     });
 
     console.log(this.totalUpDays, this.totalDownDays);
-    console.log(this.hitCertainPips / this.totalDownDays);
-    console.log(this.hit10Higher / this.totalUpDays);
+    console.log(
+      this.hitCertainPips,
+      this.hit10Higher,
+      (this.hit10Higher / this.hitCertainPips) * 100
+    );
+
     //calculates average high-low range, assigns it from line 415
     this.averageRange = parseFloat(
       (this.averageRange / this.rawData.length).toFixed(2)

@@ -15,6 +15,7 @@ const GBPUSD_DATA_WEEKLY_10YRS = require("../data/GBPUSD_WEEKLY_10YRS.csv");
 const GBPUSD_2020 = require("../data/GBPUSD_2020.csv");
 const EURAUD_5_YEAR = require("../data/EURAUD_5_YEAR.csv");
 const EURCAD_5_YEAR = require("../data/EURCAD_5_YEAR.csv");
+const GBPUSD_5MINS = require("../data/GBPUSD_Candlestick_5M.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
@@ -126,6 +127,11 @@ const DataContainer = observer(() => {
     dataStore.parseData();
   };
 
+  const load5mData = async () => {
+    let csvFile = await d3.csv(GBPUSD_5MINS);
+    console.log(csvFile);
+  };
+
   return (
     <div>
       <Button ghost onClick={() => loadData("EURUSD")}>
@@ -148,6 +154,9 @@ const DataContainer = observer(() => {
       </Button>
       <Button ghost onClick={() => loadData("EURCAD_5_YEAR")}>
         Load EURCAD 5 Year Data
+      </Button>
+      <Button ghost onClick={() => load5mData()}>
+        Parse 5m data
       </Button>
       <DataComponentForOpenClosePercentages
         totalBars={dataStore.rawData.length}

@@ -442,35 +442,34 @@ export class DataStore {
     },
   };
 
+  //parses 5 min data, and sorts it by date => all 5m candles in day arr
   parse5mData(csvFile: DSVRowArray<string>) {
-    let all5mDays: fiveMinData | Object = {};
+    let all5mDays = new Map();
     let candlesFromSameDay: any = [];
-    let currentDay = "-10";
-    let count = 0;
+    let total = 0;
+    let currentDay = "27";
     for (let data of csvFile) {
       let time = data["Local time"]!;
       let day = time.split(".")[0];
       if (day !== currentDay) {
         console.log("Not the same", currentDay, day);
-        all5mDays = {
-          ...all5mDays,
-          [time]: candlesFromSameDay,
-        };
-        count++;
+        all5mDays.set(time, candlesFromSameDay);
         candlesFromSameDay = [];
         currentDay = day;
-        console.log(all5mDays);
+        total++;
       } else {
-        let candle = {
-          Open: data["Open"],
-          High: data["High"],
-          Low: data["Low"],
-          Close: data["Close"],
-          Time: data["Local time"],
+        let candle: CandleStick = {
+          Open: data["Open"]!,
+          High: data["High"]!,
+          Low: data["Low"]!,
+          Close: data["Close"]!,
+          Time: data["Local time"]!,
         };
         candlesFromSameDay.push(candle);
       }
     }
+    console.log(total);
+    console.log(all5mDays);
   }
 
   //parses ALL data by looping through the raw data

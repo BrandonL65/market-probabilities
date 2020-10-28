@@ -129,7 +129,7 @@ const DataContainer = observer(() => {
 
   const load5mData = async () => {
     let csvFile = await d3.csv(GBPUSD_5MINS);
-    console.log(csvFile);
+    dataStore.parse5mData(csvFile);
   };
 
   return (

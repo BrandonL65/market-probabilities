@@ -206,6 +206,18 @@ export interface CandleProportions {
   OL250plus: number;
 }
 
+interface CandleStick {
+  Open: string;
+  High: string;
+  Low: string;
+  Close: string;
+  Time: string;
+}
+
+interface fiveMinData {
+  day: CandleStick[];
+}
+
 export class DataStore {
   @observable name: string = "";
 
@@ -218,6 +230,7 @@ export class DataStore {
   Price
   */
   @observable rawData: DSVRowArray<string> | null[] = [];
+  @observable parsed5mData: fiveMinData[] = [];
 
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
@@ -428,6 +441,37 @@ export class DataStore {
       totalUpCandlesWithThisLW: 0,
     },
   };
+
+  parse5mData(csvFile: DSVRowArray<string>) {
+    let all5mDays: fiveMinData | Object = {};
+    let candlesFromSameDay: any = [];
+    let currentDay = "-10";
+    let count = 0;
+    for (let data of csvFile) {
+      let time = data["Local time"]!;
+      let day = time.split(".")[0];
+      if (day !== currentDay) {
+        console.log("Not the same", currentDay, day);
+        all5mDays = {
+          ...all5mDays,
+          [time]: candlesFromSameDay,
+        };
+        count++;
+        candlesFromSameDay = [];
+        currentDay = day;
+        console.log(all5mDays);
+      } else {
+        let candle = {
+          Open: data["Open"],
+          High: data["High"],
+          Low: data["Low"],
+          Close: data["Close"],
+          Time: data["Local time"],
+        };
+        candlesFromSameDay.push(candle);
+      }
+    }
+  }
 
   //parses ALL data by looping through the raw data
   parseData = () => {

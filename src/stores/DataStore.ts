@@ -231,6 +231,7 @@ export class DataStore {
   */
   @observable rawData: DSVRowArray<string> | null[] = [];
   @observable parsed5mData: fiveMinData[] = [];
+  @observable sorted5mData = new Map<string, CandleStick[]>();
 
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
@@ -444,8 +445,8 @@ export class DataStore {
 
   //parses 5 min data, and sorts it by date => all 5m candles in day arr
   parse5mData(csvFile: DSVRowArray<string>) {
-    let all5mDays = new Map();
-    let candlesFromSameDay: any = [];
+    let all5mDays = new Map<string, CandleStick[]>();
+    let candlesFromSameDay: CandleStick[] = [];
     let total = 0;
     let currentDay = "27";
     for (let data of csvFile) {
@@ -469,8 +470,28 @@ export class DataStore {
       }
     }
     console.log(total);
-    console.log(all5mDays);
+    this.sorted5mData = all5mDays;
+    this.show5mData();
   }
+
+  //logs the 5m data
+  show5mData = () => {
+    let counter = 0;
+    let avg = 0;
+    for (let [k, v] of this.sorted5mData) {
+      for (let candle of v) {
+        if (counter >= 4) {
+          break;
+        }
+        let high = parseFloat(candle.High);
+        let low = parseFloat(candle.Low);
+        console.log((high - low) * 10000);
+        // console.log(high, low);
+        console.log(candle);
+        counter++;
+      }
+    }
+  };
 
   //parses ALL data by looping through the raw data
   parseData = () => {

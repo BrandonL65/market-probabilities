@@ -15,7 +15,10 @@ const GBPUSD_DATA_WEEKLY_10YRS = require("../data/GBPUSD_WEEKLY_10YRS.csv");
 const GBPUSD_2020 = require("../data/GBPUSD_2020.csv");
 const EURAUD_5_YEAR = require("../data/EURAUD_5_YEAR.csv");
 const EURCAD_5_YEAR = require("../data/EURCAD_5_YEAR.csv");
+//below is 5 min data for GBPUSD WITH weekends, weekends show with same OHLC
 const GBPUSD_5MINS = require("../data/GBPUSD_Candlestick_5M.csv");
+//below is 5 mins data without weekends, which is easier to use
+const GBPUSD_5MINS_NO_WEEKENDS = require("../data/GBPUSD_5M_NO_WEEKENDS.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
@@ -128,7 +131,7 @@ const DataContainer = observer(() => {
   };
 
   const load5mData = async () => {
-    let csvFile = await d3.csv(GBPUSD_5MINS);
+    let csvFile = await d3.csv(GBPUSD_5MINS_NO_WEEKENDS);
     dataStore.parse5mData(csvFile);
   };
 

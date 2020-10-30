@@ -451,7 +451,7 @@ export class DataStore {
     let total = 0;
     let currentDay = "";
     for (let data of csvFile) {
-      let time = data["Gmt time"]!;
+      let time = data["Local time"]!;
       let dayOf5mCandle = time.split(".")[0];
       if (dayOf5mCandle !== currentDay.split(".")[0]) {
         console.log("Not the same", currentDay, dayOf5mCandle);
@@ -465,7 +465,7 @@ export class DataStore {
         High: data["High"]!,
         Low: data["Low"]!,
         Close: data["Close"]!,
-        Time: data["Gmt time"]!,
+        Time: data["Local time"]!,
       };
       candlesFromSameDay.push(candle);
     }

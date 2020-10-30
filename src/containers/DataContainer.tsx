@@ -19,6 +19,7 @@ const EURCAD_5_YEAR = require("../data/EURCAD_5_YEAR.csv");
 const GBPUSD_5MINS = require("../data/GBPUSD_Candlestick_5M.csv");
 //below is 5 mins data without weekends, which is easier to use
 const GBPUSD_5MINS_NO_WEEKENDS = require("../data/GBPUSD_5M_NO_WEEKENDS.csv");
+const GBPUSD_5M_TRY2 = require("../data/GBPUSD_5M_TRY2.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);

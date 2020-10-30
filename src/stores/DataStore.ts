@@ -445,52 +445,49 @@ export class DataStore {
 
   //parses 5 min data, and sorts it by date => all 5m candles in day arr
   parse5mData(csvFile: DSVRowArray<string>) {
+    console.log(csvFile);
     let all5mDays = new Map<string, CandleStick[]>();
     let candlesFromSameDay: CandleStick[] = [];
     let total = 0;
-    let currentDay = "27";
+    let currentDay = "";
     for (let data of csvFile) {
-      let time = data["Local time"]!;
-      let day = time.split(".")[0];
-      if (day !== currentDay) {
-        console.log("Not the same", currentDay, day);
-        all5mDays.set(time, candlesFromSameDay);
+      let time = data["Gmt time"]!;
+      let dayOf5mCandle = time.split(".")[0];
+      if (dayOf5mCandle !== currentDay.split(".")[0]) {
+        console.log("Not the same", currentDay, dayOf5mCandle);
+        all5mDays.set(currentDay, candlesFromSameDay);
         candlesFromSameDay = [];
-        currentDay = day;
+        currentDay = time;
         total++;
-      } else {
-        let candle: CandleStick = {
-          Open: data["Open"]!,
-          High: data["High"]!,
-          Low: data["Low"]!,
-          Close: data["Close"]!,
-          Time: data["Local time"]!,
-        };
-        candlesFromSameDay.push(candle);
       }
+      let candle: CandleStick = {
+        Open: data["Open"]!,
+        High: data["High"]!,
+        Low: data["Low"]!,
+        Close: data["Close"]!,
+        Time: data["Gmt time"]!,
+      };
+      candlesFromSameDay.push(candle);
     }
     console.log(total);
     this.sorted5mData = all5mDays;
+    console.log(this.sorted5mData);
     this.show5mData();
   }
 
   //logs the 5m data
   show5mData = () => {
-    let counter = 0;
-    let avg = 0;
-    for (let [k, v] of this.sorted5mData) {
-      for (let candle of v) {
-        if (counter >= 4) {
-          break;
-        }
-        let high = parseFloat(candle.High);
-        let low = parseFloat(candle.Low);
-        console.log((high - low) * 10000);
-        // console.log(high, low);
-        console.log(candle);
-        counter++;
-      }
-    }
+    // let total = 0;
+    // for (let [k, candlesArr] of this.sorted5mData) {
+    //   for (let i = 0; i < candlesArr.length; i++) {
+    //     let high = parseFloat(candlesArr[i].High);
+    //     let low = parseFloat(candlesArr[i].Low);
+    //     let range = (high - low) * 10000;
+    //     total++;
+    //   }
+    //   break;
+    // }
+    // console.log(total);
   };
 
   //parses ALL data by looping through the raw data

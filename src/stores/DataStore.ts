@@ -444,36 +444,65 @@ export class DataStore {
   };
 
   //parses 5 min data, and sorts it by date => all 5m candles in day arr
-  parse5mData(csvFile: DSVRowArray<string>) {
+  // parse5mData(csvFile: DSVRowArray<string>) {
+  //   console.log(csvFile);
+  //   let all5mDays = new Map<string, CandleStick[]>();
+  //   let candlesFromSameDay: CandleStick[] = [];
+  //   let total = 0;
+  //   let currentDay = "";
+  //   for (let data of csvFile) {
+  //     let time = data["Local time"]!;
+  //     let dayOf5mCandle = time.split(".")[0];
+  //     if (dayOf5mCandle !== currentDay.split(".")[0]) {
+  //       console.log("Not the same", currentDay, dayOf5mCandle);
+  //       all5mDays.set(currentDay, candlesFromSameDay);
+  //       candlesFromSameDay = [];
+  //       currentDay = time;
+  //       total++;
+  //     }
+  //     let candle: CandleStick = {
+  //       Open: data["Open"]!,
+  //       High: data["High"]!,
+  //       Low: data["Low"]!,
+  //       Close: data["Close"]!,
+  //       Time: data["Local time"]!,
+  //     };
+  //     candlesFromSameDay.push(candle);
+  //   }
+  //   console.log(total);
+  //   this.sorted5mData = all5mDays;
+  //   console.log(this.sorted5mData);
+  //   this.show5mData();
+  // }
+  parse5mData = (csvFile: DSVRowArray<string>) => {
     console.log(csvFile);
     let all5mDays = new Map<string, CandleStick[]>();
     let candlesFromSameDay: CandleStick[] = [];
+    let currentDay = csvFile[0]["Local time"]!;
     let total = 0;
-    let currentDay = "";
-    for (let data of csvFile) {
-      let time = data["Local time"]!;
-      let dayOf5mCandle = time.split(".")[0];
-      if (dayOf5mCandle !== currentDay.split(".")[0]) {
-        console.log("Not the same", currentDay, dayOf5mCandle);
+    for (let candle of csvFile) {
+      let candleTime = candle["Local time"]!;
+      let hour = candleTime.split(" ")[1].split(":")[0];
+      let minute = candleTime.split(" ")[1].split(":")[1];
+
+      if (hour === "17" && minute === "00") {
         all5mDays.set(currentDay, candlesFromSameDay);
+        currentDay = candleTime;
         candlesFromSameDay = [];
-        currentDay = time;
         total++;
       }
-      let candle: CandleStick = {
-        Open: data["Open"]!,
-        High: data["High"]!,
-        Low: data["Low"]!,
-        Close: data["Close"]!,
-        Time: data["Local time"]!,
+      let candleObject: CandleStick = {
+        Open: candle["Open"]!,
+        High: candle["High"]!,
+        Low: candle["Low"]!,
+        Close: candle["Close"]!,
+        Time: candle["Local time"]!,
       };
-      candlesFromSameDay.push(candle);
+      candlesFromSameDay.push(candleObject);
     }
     console.log(total);
-    this.sorted5mData = all5mDays;
-    console.log(this.sorted5mData);
-    this.show5mData();
-  }
+    console.log(all5mDays);
+  };
 
   //logs the 5m data
   show5mData = () => {

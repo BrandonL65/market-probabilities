@@ -502,6 +502,7 @@ export class DataStore {
     }
     console.log(total);
     console.log(all5mDays);
+    console.log("UNCOOL");
   };
 
   //logs the 5m data

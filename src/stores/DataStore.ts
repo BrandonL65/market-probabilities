@@ -207,10 +207,10 @@ export interface CandleProportions {
 }
 
 interface CandleStick {
-  Open: string;
-  High: string;
-  Low: string;
-  Close: string;
+  Open: number;
+  High: number;
+  Low: number;
+  Close: number;
   Time: string;
 }
 
@@ -475,11 +475,10 @@ export class DataStore {
   //   this.show5mData();
   // }
   parse5mData = (csvFile: DSVRowArray<string>) => {
-    console.log(csvFile);
     let all5mDays = new Map<string, CandleStick[]>();
     let candlesFromSameDay: CandleStick[] = [];
     let currentDay = csvFile[0]["Local time"]!;
-    let total = 0;
+
     for (let candle of csvFile) {
       let candleTime = candle["Local time"]!;
       let hour = candleTime.split(" ")[1].split(":")[0];
@@ -489,34 +488,47 @@ export class DataStore {
         all5mDays.set(currentDay, candlesFromSameDay);
         currentDay = candleTime;
         candlesFromSameDay = [];
-        total++;
       }
       let candleObject: CandleStick = {
-        Open: candle["Open"]!,
-        High: candle["High"]!,
-        Low: candle["Low"]!,
-        Close: candle["Close"]!,
+        Open: parseFloat(candle["Open"]!),
+        High: parseFloat(candle["High"]!),
+        Low: parseFloat(candle["Low"]!),
+        Close: parseFloat(candle["Close"]!),
         Time: candle["Local time"]!,
       };
       candlesFromSameDay.push(candleObject);
     }
-    console.log(total);
+    this.sorted5mData = all5mDays;
     console.log(all5mDays);
+    // console.log(this.sorted5mData);
+    // this.show5mData();
   };
 
+  @observable dailyOpenDeviations = {
+    plus50: Infinity,
+    plus40: Infinity,
+  };
   //logs the 5m data
   show5mData = () => {
-    // let total = 0;
-    // for (let [k, candlesArr] of this.sorted5mData) {
-    //   for (let i = 0; i < candlesArr.length; i++) {
-    //     let high = parseFloat(candlesArr[i].High);
-    //     let low = parseFloat(candlesArr[i].Low);
-    //     let range = (high - low) * 10000;
-    //     total++;
-    //   }
-    //   break;
-    // }
-    // console.log(total);
+    for (let [k, candlesArr] of this.sorted5mData) {
+      let dailyOpen = candlesArr[0].Open;
+      this.dailyOpenDeviations.plus40 = dailyOpen + 0.004;
+      this.dailyOpenDeviations.plus50 = dailyOpen + 0.005;
+      let howManyItTook = 0;
+      for (let i = 0; i < candlesArr.length; i++) {
+        let currentCandle = candlesArr[i];
+        if (i === candlesArr.length - 1) {
+          console.log("Boohoo");
+          console.log(k);
+        }
+        if (currentCandle.High >= this.dailyOpenDeviations.plus40) {
+          console.log(howManyItTook, "Break");
+          break;
+        } else {
+          howManyItTook++;
+        }
+      }
+    }
   };
 
   //parses ALL data by looping through the raw data

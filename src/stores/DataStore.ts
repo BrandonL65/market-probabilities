@@ -476,6 +476,7 @@ export class DataStore {
   // }
   @observable total5mCandles: number = 0;
   @observable total5mDays: number = 0;
+
   parse5mData = (csvFile: DSVRowArray<string>) => {
     let all5mDays = new Map<string, CandleStick[]>();
     let candlesFromSameDay: CandleStick[] = [];
@@ -515,36 +516,41 @@ export class DataStore {
     totalCandlesWentUp10p: 0,
     totalCandlesWentDown10p: 0,
   };
+  @observable upDaysGreaterThan40 = 0;
+  @observable total5mUpDays = 0;
   //logs the 5m data
   show5mData = () => {
     for (let [k, candlesArr] of this.sorted5mData) {
       let dailyOpen = candlesArr[0].Open;
+      let dailyClose = candlesArr[candlesArr.length - 1].Close;
       this.dailyOpenDeviations.plus40 = dailyOpen + 0.004;
-      this.dailyOpenDeviations.plus50 = dailyOpen + 0.005;
+      this.dailyOpenDeviations.plus50 = dailyOpen + 0.01;
 
-      for (let i = 0; i < candlesArr.length; i++) {
-        if (candlesArr[i].High >= this.dailyOpenDeviations.plus40) {
-          this.dailyOpenDeviations.totalCandlesHit40++;
-          console.log(k);
-          for (let j = i + 1; j < candlesArr.length; j++) {
-            if (candlesArr[j].High >= this.dailyOpenDeviations.plus50) {
-              this.dailyOpenDeviations.totalCandlesWentUp10p++;
-              console.log("WIN");
-              break;
-            } else if (candlesArr[j].Low <= dailyOpen + 0.003) {
-              this.dailyOpenDeviations.totalCandlesWentDown10p++;
-              console.log("LOSE");
-              break;
-            }
+      // for (let i = 0; i < candlesArr.length; i++) {
+      //   if (candlesArr[i].High >= this.dailyOpenDeviations.plus40) {
+      //     this.dailyOpenDeviations.totalCandlesHit40++;
+      //     for (let j = i + 1; j < candlesArr.length; j++) {
+
+      //     }
+      //     break;
+      //   }
+      // }
+      if (dailyClose > dailyOpen) {
+        this.total5mUpDays++;
+        for (let i = 0; i < candlesArr.length; i++) {
+          if (candlesArr[i].High > this.dailyOpenDeviations.plus40) {
+            this.upDaysGreaterThan40++;
+            break;
           }
-          break;
         }
       }
     }
     console.log(this.total5mDays);
-    console.log(this.dailyOpenDeviations.totalCandlesHit40);
-    console.log(this.dailyOpenDeviations.totalCandlesWentUp10p);
-    console.log(this.dailyOpenDeviations.totalCandlesWentDown10p);
+    console.log(this.total5mUpDays);
+    console.log(this.upDaysGreaterThan40);
+    // console.log(this.dailyOpenDeviations.totalCandlesHit40);
+    // console.log(this.dailyOpenDeviations.totalCandlesWentUp10p);
+    // console.log(this.dailyOpenDeviations.totalCandlesWentDown10p);
   };
 
   //parses ALL data by looping through the raw data

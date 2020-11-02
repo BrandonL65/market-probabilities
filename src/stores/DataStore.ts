@@ -489,6 +489,7 @@ export class DataStore {
         all5mDays.set(currentDay, candlesFromSameDay);
         candlesFromSameDay = [];
         continue;
+        console.log("Hello");
       }
       let candleObject: CandleStick = {
         Open: parseFloat(candle["Open"]!),

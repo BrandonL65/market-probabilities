@@ -442,7 +442,7 @@ export class DataStore {
       totalUpCandlesWithThisLW: 0,
     },
   };
-
+  //the code below sorts it by 00 time, rather than exchange time, 17:00
   //parses 5 min data, and sorts it by date => all 5m candles in day arr
   // parse5mData(csvFile: DSVRowArray<string>) {
   //   console.log(csvFile);
@@ -485,8 +485,8 @@ export class DataStore {
       let minute = candleTime.split(" ")[1].split(":")[1];
 
       if (hour === "17" && minute === "00") {
-        all5mDays.set(currentDay, candlesFromSameDay);
         currentDay = candleTime;
+        all5mDays.set(currentDay, candlesFromSameDay);
         candlesFromSameDay = [];
       }
       let candleObject: CandleStick = {
@@ -501,7 +501,7 @@ export class DataStore {
     this.sorted5mData = all5mDays;
     console.log(all5mDays);
     // console.log(this.sorted5mData);
-    // this.show5mData();
+    this.show5mData();
   };
 
   @observable dailyOpenDeviations = {

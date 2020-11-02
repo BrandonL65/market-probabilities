@@ -206,6 +206,18 @@ export interface CandleProportions {
   OL250plus: number;
 }
 
+interface CandleStick {
+  Open: number;
+  High: number;
+  Low: number;
+  Close: number;
+  Time: string;
+}
+
+interface fiveMinData {
+  day: CandleStick[];
+}
+
 export class DataStore {
   @observable name: string = "";
 
@@ -218,6 +230,8 @@ export class DataStore {
   Price
   */
   @observable rawData: DSVRowArray<string> | null[] = [];
+  @observable parsed5mData: fiveMinData[] = [];
+  @observable sorted5mData = new Map<string, CandleStick[]>();
 
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
@@ -427,6 +441,94 @@ export class DataStore {
       averageOH: 0,
       totalUpCandlesWithThisLW: 0,
     },
+  };
+  //the code below sorts it by 00 time, rather than exchange time, 17:00
+  //parses 5 min data, and sorts it by date => all 5m candles in day arr
+  // parse5mData(csvFile: DSVRowArray<string>) {
+  //   console.log(csvFile);
+  //   let all5mDays = new Map<string, CandleStick[]>();
+  //   let candlesFromSameDay: CandleStick[] = [];
+  //   let total = 0;
+  //   let currentDay = "";
+  //   for (let data of csvFile) {
+  //     let time = data["Local time"]!;
+  //     let dayOf5mCandle = time.split(".")[0];
+  //     if (dayOf5mCandle !== currentDay.split(".")[0]) {
+  //       console.log("Not the same", currentDay, dayOf5mCandle);
+  //       all5mDays.set(currentDay, candlesFromSameDay);
+  //       candlesFromSameDay = [];
+  //       currentDay = time;
+  //       total++;
+  //     }
+  //     let candle: CandleStick = {
+  //       Open: data["Open"]!,
+  //       High: data["High"]!,
+  //       Low: data["Low"]!,
+  //       Close: data["Close"]!,
+  //       Time: data["Local time"]!,
+  //     };
+  //     candlesFromSameDay.push(candle);
+  //   }
+  //   console.log(total);
+  //   this.sorted5mData = all5mDays;
+  //   console.log(this.sorted5mData);
+  //   this.show5mData();
+  // }
+  parse5mData = (csvFile: DSVRowArray<string>) => {
+    let all5mDays = new Map<string, CandleStick[]>();
+    let candlesFromSameDay: CandleStick[] = [];
+    let currentDay = csvFile[0]["Local time"]!;
+
+    for (let candle of csvFile) {
+      let candleTime = candle["Local time"]!;
+      let hour = candleTime.split(" ")[1].split(":")[0];
+      let minute = candleTime.split(" ")[1].split(":")[1];
+
+      if (hour === "17" && minute === "00") {
+        currentDay = candleTime;
+        all5mDays.set(currentDay, candlesFromSameDay);
+        candlesFromSameDay = [];
+      }
+      let candleObject: CandleStick = {
+        Open: parseFloat(candle["Open"]!),
+        High: parseFloat(candle["High"]!),
+        Low: parseFloat(candle["Low"]!),
+        Close: parseFloat(candle["Close"]!),
+        Time: candle["Local time"]!,
+      };
+      candlesFromSameDay.push(candleObject);
+    }
+    this.sorted5mData = all5mDays;
+    console.log(all5mDays);
+    // console.log(this.sorted5mData);
+    this.show5mData();
+  };
+
+  @observable dailyOpenDeviations = {
+    plus50: Infinity,
+    plus40: Infinity,
+  };
+  //logs the 5m data
+  show5mData = () => {
+    for (let [k, candlesArr] of this.sorted5mData) {
+      let dailyOpen = candlesArr[0].Open;
+      this.dailyOpenDeviations.plus40 = dailyOpen + 0.004;
+      this.dailyOpenDeviations.plus50 = dailyOpen + 0.005;
+      let howManyItTook = 0;
+      for (let i = 0; i < candlesArr.length; i++) {
+        let currentCandle = candlesArr[i];
+        if (i === candlesArr.length - 1) {
+          console.log("Boohoo");
+          console.log(k);
+        }
+        if (currentCandle.High >= this.dailyOpenDeviations.plus40) {
+          console.log(howManyItTook, "Break");
+          break;
+        } else {
+          howManyItTook++;
+        }
+      }
+    }
   };
 
   //parses ALL data by looping through the raw data

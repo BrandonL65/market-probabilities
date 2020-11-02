@@ -13,6 +13,13 @@ const GBPUSD_DATA = require("../data/GBPUSD.csv");
 const GBPUSD_DATA_TWOYEARS = require("../data/GBPUSD_NEW.csv");
 const GBPUSD_DATA_WEEKLY_10YRS = require("../data/GBPUSD_WEEKLY_10YRS.csv");
 const GBPUSD_2020 = require("../data/GBPUSD_2020.csv");
+const EURAUD_5_YEAR = require("../data/EURAUD_5_YEAR.csv");
+const EURCAD_5_YEAR = require("../data/EURCAD_5_YEAR.csv");
+//below is 5 min data for GBPUSD WITH weekends, weekends show with same OHLC
+const GBPUSD_5MINS = require("../data/GBPUSD_Candlestick_5M.csv");
+//below is 5 mins data without weekends, which is easier to use
+const GBPUSD_5MINS_NO_WEEKENDS = require("../data/GBPUSD_5M_NO_WEEKENDS.csv");
+const GBPUSD_5M_TRY2 = require("../data/GBPUSD_5M_TRY2.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
@@ -111,11 +118,22 @@ const DataContainer = observer(() => {
       case "GBPUSD_W_10":
         csv = await d3.csv(GBPUSD_DATA_WEEKLY_10YRS);
         break;
+      case "EURAUD_5_YEAR":
+        csv = await d3.csv(EURAUD_5_YEAR);
+        break;
+      case "EURCAD_5_YEAR":
+        csv = await d3.csv(EURCAD_5_YEAR);
+        break;
       default:
         csv = await d3.csv(GBPUSD_2020);
     }
     dataStore.rawData = csv;
     dataStore.parseData();
+  };
+
+  const load5mData = async () => {
+    let csvFile = await d3.csv(GBPUSD_5MINS_NO_WEEKENDS);
+    dataStore.parse5mData(csvFile);
   };
 
   return (
@@ -134,6 +152,15 @@ const DataContainer = observer(() => {
       </Button>
       <Button ghost onClick={() => loadData("GBPUSD_2020")}>
         Load GBPUSD 2020 Data
+      </Button>
+      <Button ghost onClick={() => loadData("EURAUD_5_YEAR")}>
+        Load EURAUD 5 Year Data
+      </Button>
+      <Button ghost onClick={() => loadData("EURCAD_5_YEAR")}>
+        Load EURCAD 5 Year Data
+      </Button>
+      <Button ghost onClick={() => load5mData()}>
+        Parse 5m data
       </Button>
       <DataComponentForOpenClosePercentages
         totalBars={dataStore.rawData.length}
@@ -305,6 +332,10 @@ const DataContainer = observer(() => {
         LW120={LW120}
         LW120plus={LW120plus}
       />
+      <div>
+        Here will be a div that contains the % of bars that close red/green for
+        any given LW range
+      </div>
     </div>
   );
 });

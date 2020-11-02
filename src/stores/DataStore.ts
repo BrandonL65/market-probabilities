@@ -515,20 +515,6 @@ export class DataStore {
       let dailyOpen = candlesArr[0].Open;
       this.dailyOpenDeviations.plus40 = dailyOpen + 0.004;
       this.dailyOpenDeviations.plus50 = dailyOpen + 0.005;
-      let howManyItTook = 0;
-      for (let i = 0; i < candlesArr.length; i++) {
-        let currentCandle = candlesArr[i];
-        if (i === candlesArr.length - 1) {
-          console.log("Boohoo");
-          console.log(k);
-        }
-        if (currentCandle.High >= this.dailyOpenDeviations.plus40) {
-          console.log(howManyItTook, "Break");
-          break;
-        } else {
-          howManyItTook++;
-        }
-      }
     }
   };
 

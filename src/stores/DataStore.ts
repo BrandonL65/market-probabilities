@@ -474,12 +474,15 @@ export class DataStore {
   //   console.log(this.sorted5mData);
   //   this.show5mData();
   // }
+  @observable total5mCandles: number = 0;
+  @observable total5mDays: number = 0;
   parse5mData = (csvFile: DSVRowArray<string>) => {
     let all5mDays = new Map<string, CandleStick[]>();
     let candlesFromSameDay: CandleStick[] = [];
     let currentDay = csvFile[0]["Local time"]!;
 
     for (let candle of csvFile) {
+      this.total5mCandles++;
       let candleTime = candle["Local time"]!;
       let hour = candleTime.split(" ")[1].split(":")[0];
       let minute = candleTime.split(" ")[1].split(":")[1];
@@ -488,6 +491,7 @@ export class DataStore {
         currentDay = candleTime;
         all5mDays.set(currentDay, candlesFromSameDay);
         candlesFromSameDay = [];
+        this.total5mDays++;
         continue;
       }
       let candleObject: CandleStick = {
@@ -501,13 +505,15 @@ export class DataStore {
     }
     this.sorted5mData = all5mDays;
     console.log(all5mDays);
-    // console.log(this.sorted5mData);
     this.show5mData();
   };
 
   @observable dailyOpenDeviations = {
     plus50: Infinity,
     plus40: Infinity,
+    totalCandlesHit40: 0,
+    totalCandlesWentUp10p: 0,
+    totalCandlesWentDown10p: 0,
   };
   //logs the 5m data
   show5mData = () => {
@@ -515,7 +521,30 @@ export class DataStore {
       let dailyOpen = candlesArr[0].Open;
       this.dailyOpenDeviations.plus40 = dailyOpen + 0.004;
       this.dailyOpenDeviations.plus50 = dailyOpen + 0.005;
+
+      for (let i = 0; i < candlesArr.length; i++) {
+        if (candlesArr[i].High >= this.dailyOpenDeviations.plus40) {
+          this.dailyOpenDeviations.totalCandlesHit40++;
+          console.log(k);
+          for (let j = i + 1; j < candlesArr.length; j++) {
+            if (candlesArr[j].High >= this.dailyOpenDeviations.plus50) {
+              this.dailyOpenDeviations.totalCandlesWentUp10p++;
+              console.log("WIN");
+              break;
+            } else if (candlesArr[j].Low <= dailyOpen + 0.003) {
+              this.dailyOpenDeviations.totalCandlesWentDown10p++;
+              console.log("LOSE");
+              break;
+            }
+          }
+          break;
+        }
+      }
     }
+    console.log(this.total5mDays);
+    console.log(this.dailyOpenDeviations.totalCandlesHit40);
+    console.log(this.dailyOpenDeviations.totalCandlesWentUp10p);
+    console.log(this.dailyOpenDeviations.totalCandlesWentDown10p);
   };
 
   //parses ALL data by looping through the raw data

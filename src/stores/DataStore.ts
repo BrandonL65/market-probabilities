@@ -484,10 +484,11 @@ export class DataStore {
       let hour = candleTime.split(" ")[1].split(":")[0];
       let minute = candleTime.split(" ")[1].split(":")[1];
 
-      if (hour === "17" && minute === "00") {
+      if (hour === "16" && minute === "55") {
         currentDay = candleTime;
         all5mDays.set(currentDay, candlesFromSameDay);
         candlesFromSameDay = [];
+        continue;
       }
       let candleObject: CandleStick = {
         Open: parseFloat(candle["Open"]!),

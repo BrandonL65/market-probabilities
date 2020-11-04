@@ -233,6 +233,8 @@ export class DataStore {
   @observable parsed5mData: fiveMinData[] = [];
   @observable sorted5mData = new Map<string, CandleStick[]>();
 
+  @observable sorted1HData = new Map<string, CandleStick[]>();
+
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
   @observable averageRange: number = 0;
@@ -506,51 +508,135 @@ export class DataStore {
     }
     this.sorted5mData = all5mDays;
     console.log(all5mDays);
-    this.show5mData();
+    // this.enterAfterPriceFallsXPips();
+    this.numTimesPriceWentBackToOpenAfterXPipsOneSide();
   };
 
-  @observable dailyOpenDeviations = {
-    plus50: Infinity,
-    plus40: Infinity,
-    totalCandlesHit40: 0,
-    totalCandlesWentUp10p: 0,
-    totalCandlesWentDown10p: 0,
+  @observable total1HCandles = 0;
+
+  parse1HData = (csvFile: DSVRowArray<string>) => {
+    let all1HDays = new Map<string, CandleStick[]>();
+    let candlesFromSameDay: CandleStick[] = [];
+    let currentDay = csvFile[0]["Local time"]!;
+
+    for (let candle of csvFile) {
+      this.total1HCandles++;
+      let candleTime = candle["Local time"]!;
+      let hour = candleTime.split(" ")[1].split(":")[0];
+      let minute = candleTime.split(" ")[1].split(":")[1];
+
+      if (hour === "16" && minute === "00") {
+        currentDay = candleTime;
+        all1HDays.set(currentDay, candlesFromSameDay);
+        candlesFromSameDay = [];
+        this.total5mDays++;
+        continue;
+      }
+      let candleObject: CandleStick = {
+        Open: parseFloat(candle["Open"]!),
+        High: parseFloat(candle["High"]!),
+        Low: parseFloat(candle["Low"]!),
+        Close: parseFloat(candle["Close"]!),
+        Time: candle["Local time"]!,
+      };
+      candlesFromSameDay.push(candleObject);
+    }
+    this.sorted1HData = all1HDays;
+    console.log(all1HDays);
+    // this.enterAfterPriceFallsXPips();
   };
-  @observable upDaysGreaterThan40 = 0;
-  @observable total5mUpDays = 0;
-  //logs the 5m data
-  show5mData = () => {
+  numTimesPriceWentBackToOpenAfterXPipsOneSide = () => {
+    let results = {
+      total: 0,
+      touchedLowerDeviation: 0,
+      touchedLowerDeviationBouncedBack: 0,
+      touchedLowerDeviationBouncedBackThenBackDown: 0,
+      touchedUpperAfterGoingBackToOpen: 0,
+    };
     for (let [k, candlesArr] of this.sorted5mData) {
       let dailyOpen = candlesArr[0].Open;
-      let dailyClose = candlesArr[candlesArr.length - 1].Close;
-      this.dailyOpenDeviations.plus40 = dailyOpen + 0.004;
-      this.dailyOpenDeviations.plus50 = dailyOpen + 0.01;
-
-      // for (let i = 0; i < candlesArr.length; i++) {
-      //   if (candlesArr[i].High >= this.dailyOpenDeviations.plus40) {
-      //     this.dailyOpenDeviations.totalCandlesHit40++;
-      //     for (let j = i + 1; j < candlesArr.length; j++) {
-
-      //     }
-      //     break;
-      //   }
-      // }
-      if (dailyClose > dailyOpen) {
-        this.total5mUpDays++;
-        for (let i = 0; i < candlesArr.length; i++) {
-          if (candlesArr[i].High > this.dailyOpenDeviations.plus40) {
-            this.upDaysGreaterThan40++;
-            break;
+      let amountDeviateUp = dailyOpen + 0.003;
+      let amountDeviateDown = dailyOpen - 0.003;
+      results.total++;
+      for (let i = 0; i < candlesArr.length; i++) {
+        if (candlesArr[i].Low <= amountDeviateDown) {
+          results.touchedLowerDeviation++;
+          for (let j = i + 1; j < candlesArr.length; j++) {
+            if (candlesArr[j].High >= dailyOpen) {
+              results.touchedLowerDeviationBouncedBack++;
+              for (let k = j; k < candlesArr.length; k++) {
+                if (candlesArr[k].Low < amountDeviateDown) {
+                  results.touchedLowerDeviationBouncedBackThenBackDown++;
+                  break;
+                } else if (candlesArr[k].High >= amountDeviateUp) {
+                  results.touchedUpperAfterGoingBackToOpen++;
+                  break;
+                }
+              }
+              break;
+            }
           }
+          break;
         }
       }
     }
-    console.log(this.total5mDays);
-    console.log(this.total5mUpDays);
-    console.log(this.upDaysGreaterThan40);
-    // console.log(this.dailyOpenDeviations.totalCandlesHit40);
-    // console.log(this.dailyOpenDeviations.totalCandlesWentUp10p);
-    // console.log(this.dailyOpenDeviations.totalCandlesWentDown10p);
+    console.log(results);
+  };
+
+  //when price falls 30 pips, enter with SL at X and TP at Y, see % of wins, etc
+  enterAfterPriceFallsXPips = () => {
+    let trades = {
+      total5mUpDays: 0,
+      total5mDownDays: 0,
+      rawWin: 0,
+      rawLose: 0,
+      numWins: 0,
+      numLosses: 0,
+      winByEOC: 0,
+      loseByEOC: 0,
+      totalTrades: 0,
+    };
+    for (let [k, candlesArr] of this.sorted5mData) {
+      let dailyOpen = candlesArr[0].Open;
+      let dailyClose = candlesArr[candlesArr.length - 1].Close;
+
+      if (dailyClose >= dailyOpen) {
+        trades.total5mUpDays++;
+      }
+      if (dailyClose < dailyOpen) {
+        trades.total5mDownDays++;
+      }
+
+      for (let i = 0; i < candlesArr.length; i++) {
+        if (candlesArr[i].Low < dailyOpen - 0.003) {
+          trades.totalTrades++;
+          for (let j = i; j < candlesArr.length; j++) {
+            if (candlesArr[j].Low < dailyOpen - 0.0045) {
+              trades.numLosses++;
+              trades.rawLose += 1;
+              break;
+            } else if (candlesArr[j].High >= dailyOpen + 0.006) {
+              trades.numWins++;
+              trades.rawWin += 6;
+              break;
+            } else if (j === candlesArr.length - 1) {
+              if (dailyClose > dailyOpen - 0.003) {
+                trades.winByEOC++;
+                let diff = parseFloat(
+                  ((dailyClose - (dailyOpen - 0.003)) * 10000).toFixed(1)
+                );
+                trades.rawWin += diff / 15;
+              } else {
+                trades.loseByEOC++;
+                trades.rawLose += 1;
+              }
+            }
+          }
+          break;
+        }
+      }
+    }
+    console.log(trades);
   };
 
   //parses ALL data by looping through the raw data

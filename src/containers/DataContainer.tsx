@@ -20,6 +20,7 @@ const GBPUSD_5MINS = require("../data/GBPUSD_Candlestick_5M.csv");
 //below is 5 mins data without weekends, which is easier to use
 const GBPUSD_5MINS_NO_WEEKENDS = require("../data/GBPUSD_5M_NO_WEEKENDS.csv");
 const GBPUSD_5M_TRY2 = require("../data/GBPUSD_5M_TRY2.csv");
+const GBPUSD_1H_NO_WEEKENDS = require("../data/GBPUSD_1H_NOWEEKENDS.csv");
 
 const DataContainer = observer(() => {
   const { dataStore } = useContext(rootStoreContext);
@@ -136,6 +137,11 @@ const DataContainer = observer(() => {
     dataStore.parse5mData(csvFile);
   };
 
+  const load1HData = async () => {
+    let csvFile = await d3.csv(GBPUSD_1H_NO_WEEKENDS);
+    dataStore.parse1HData(csvFile);
+  };
+
   return (
     <div>
       <Button ghost onClick={() => loadData("EURUSD")}>
@@ -161,6 +167,9 @@ const DataContainer = observer(() => {
       </Button>
       <Button ghost onClick={() => load5mData()}>
         Parse 5m data
+      </Button>
+      <Button ghost onClick={() => load1HData()}>
+        Load 1H data
       </Button>
       <DataComponentForOpenClosePercentages
         totalBars={dataStore.rawData.length}

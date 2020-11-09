@@ -233,6 +233,8 @@ export class DataStore {
   @observable parsed5mData: fiveMinData[] = [];
   @observable sorted5mData = new Map<string, CandleStick[]>();
 
+  @observable sorted1HData = new Map<string, CandleStick[]>();
+
   @observable totalUpDays: number = 0;
   @observable totalDownDays: number = 0;
   @observable averageRange: number = 0;
@@ -474,12 +476,16 @@ export class DataStore {
   //   console.log(this.sorted5mData);
   //   this.show5mData();
   // }
+  @observable total5mCandles: number = 0;
+  @observable total5mDays: number = 0;
+
   parse5mData = (csvFile: DSVRowArray<string>) => {
     let all5mDays = new Map<string, CandleStick[]>();
     let candlesFromSameDay: CandleStick[] = [];
     let currentDay = csvFile[0]["Local time"]!;
 
     for (let candle of csvFile) {
+      this.total5mCandles++;
       let candleTime = candle["Local time"]!;
       let hour = candleTime.split(" ")[1].split(":")[0];
       let minute = candleTime.split(" ")[1].split(":")[1];
@@ -488,6 +494,7 @@ export class DataStore {
         currentDay = candleTime;
         all5mDays.set(currentDay, candlesFromSameDay);
         candlesFromSameDay = [];
+        this.total5mDays++;
         continue;
       }
       let candleObject: CandleStick = {
@@ -501,35 +508,161 @@ export class DataStore {
     }
     this.sorted5mData = all5mDays;
     console.log(all5mDays);
-    // console.log(this.sorted5mData);
-    this.show5mData();
+    // this.enterAfterPriceFallsXPips();
+    this.numTimesPriceWentBackToOpenAfterXPipsOneSide();
   };
 
-  @observable dailyOpenDeviations = {
-    plus50: Infinity,
-    plus40: Infinity,
-  };
-  //logs the 5m data
-  show5mData = () => {
+  numTimesPriceWentBackToOpenAfterXPipsOneSide = () => {
+    let results = {
+      total: 0,
+      touchedLowerDeviation: 0,
+      touchedLowerDeviationBouncedBack: 0,
+      touchedLowerDeviationBouncedBackThenBackDown: 0,
+      touchedUpperAfterGoingBackToOpen: 0,
+    };
     for (let [k, candlesArr] of this.sorted5mData) {
       let dailyOpen = candlesArr[0].Open;
-      this.dailyOpenDeviations.plus40 = dailyOpen + 0.004;
-      this.dailyOpenDeviations.plus50 = dailyOpen + 0.005;
-      let howManyItTook = 0;
+      let amountDeviateUp = dailyOpen + 0.003;
+      let amountDeviateDown = dailyOpen - 0.003;
+      results.total++;
       for (let i = 0; i < candlesArr.length; i++) {
-        let currentCandle = candlesArr[i];
-        if (i === candlesArr.length - 1) {
-          console.log("Boohoo");
-          console.log(k);
-        }
-        if (currentCandle.High >= this.dailyOpenDeviations.plus40) {
-          console.log(howManyItTook, "Break");
+        if (candlesArr[i].Low <= amountDeviateDown) {
+          results.touchedLowerDeviation++;
+          for (let j = i + 1; j < candlesArr.length; j++) {
+            if (candlesArr[j].High >= dailyOpen) {
+              results.touchedLowerDeviationBouncedBack++;
+              for (let k = j; k < candlesArr.length; k++) {
+                if (candlesArr[k].Low < amountDeviateDown) {
+                  results.touchedLowerDeviationBouncedBackThenBackDown++;
+                  break;
+                } else if (candlesArr[k].High >= amountDeviateUp) {
+                  results.touchedUpperAfterGoingBackToOpen++;
+                  break;
+                }
+              }
+              break;
+            }
+          }
           break;
-        } else {
-          howManyItTook++;
         }
       }
     }
+    console.log(results);
+  };
+
+  @observable total1HCandles = 0;
+  @observable total1HDays = 0;
+  parse1HData = (csvFile: DSVRowArray<string>) => {
+    let all1HDays = new Map<string, CandleStick[]>();
+    let candlesFromSameDay: CandleStick[] = [];
+    let currentDay = csvFile[0]["Local time"]!;
+
+    for (let candle of csvFile) {
+      this.total1HCandles++;
+      let candleTime = candle["Local time"]!;
+      let hour = candleTime.split(" ")[1].split(":")[0];
+      let minute = candleTime.split(" ")[1].split(":")[1];
+      let candleObject: CandleStick = {
+        Open: parseFloat(candle["Open"]!),
+        High: parseFloat(candle["High"]!),
+        Low: parseFloat(candle["Low"]!),
+        Close: parseFloat(candle["Close"]!),
+        Time: candle["Local time"]!,
+      };
+      candlesFromSameDay.push(candleObject);
+      if (hour === "16" && minute === "00") {
+        currentDay = candleTime;
+        all1HDays.set(currentDay, candlesFromSameDay);
+        candlesFromSameDay = [];
+        this.total1HDays++;
+        continue;
+      }
+    }
+    this.sorted1HData = all1HDays;
+    console.log(all1HDays);
+    this.PercentCloseGreenRedAfterMovementOfCertainAmt();
+  };
+
+  PercentCloseGreenRedAfterMovementOfCertainAmt = () => {
+    let data = new Map([
+      ["totalDays", 0],
+      ["totalGreenDays", 0],
+      ["totalRedDays", 0],
+      ["totalTouchedDev", 0],
+      ["totalClosedGreenAfterDev", 0],
+      ["totalClosedRedAfterDev", 0],
+      ["totalTouchedOpenAgainAfterDev", 0],
+      ["touchedOpenAndClosedGreen", 0],
+      ["touchedOpenAndClosedRed", 0],
+      ["wentBackToDevAgain", 0],
+      ["wentLowerByDeviation", 0],
+    ]);
+    for (let [date, candlesArr] of this.sorted1HData) {
+      let dailyOpen = candlesArr[0].Open;
+      let dailyClose = candlesArr[candlesArr.length - 1].Close;
+      let deviationUp = dailyOpen + 0.004;
+      let deviationDown = dailyOpen - 0.004;
+      data.set("totalDays", data.get("totalDays")! + 1);
+      if (dailyClose > dailyOpen) {
+        data.set("totalGreenDays", data.get("totalGreenDays")! + 1);
+      } else {
+        data.set("totalRedDays", data.get("totalRedDays")! + 1);
+      }
+
+      for (let i = 0; i < candlesArr.length; i++) {
+        if (candlesArr[i].High >= deviationUp) {
+          data.set("totalTouchedDev", data.get("totalTouchedDev")! + 1);
+          if (dailyClose > dailyOpen) {
+            data.set(
+              "totalClosedGreenAfterDev",
+              data.get("totalClosedGreenAfterDev")! + 1
+            );
+          } else {
+            data.set(
+              "totalClosedRedAfterDev",
+              data.get("totalClosedRedAfterDev")! + 1
+            );
+          }
+          for (let j = i + 1; j < candlesArr.length; j++) {
+            if (candlesArr[j].Low <= dailyOpen) {
+              data.set(
+                "totalTouchedOpenAgainAfterDev",
+                data.get("totalTouchedOpenAgainAfterDev")! + 1
+              );
+              if (dailyClose > dailyOpen) {
+                data.set(
+                  "touchedOpenAndClosedGreen",
+                  data.get("touchedOpenAndClosedGreen")! + 1
+                );
+              } else {
+                data.set(
+                  "touchedOpenAndClosedRed",
+                  data.get("touchedOpenAndClosedRed")! + 1
+                );
+              }
+              for (let k = j + 1; k < candlesArr.length; k++) {
+                if (candlesArr[k].High >= deviationUp) {
+                  data.set(
+                    "wentBackToDevAgain",
+                    data.get("wentBackToDevAgain")! + 1
+                  );
+                  break;
+                } else if (candlesArr[k].Low <= deviationDown) {
+                  data.set(
+                    "wentLowerByDeviation",
+                    data.get("wentLowerByDeviation")! + 1
+                  );
+                  break;
+                }
+              }
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+    console.log(data);
   };
 
   //parses ALL data by looping through the raw data

@@ -42,7 +42,32 @@ export class OneHourStore {
     }
     this.sorted1HData = all1HDays;
     console.log(all1HDays);
-    this.PercentCloseGreenRedAfterMovementOfCertainAmt();
+    // this.PercentCloseGreenRedAfterMovementOfCertainAmt();
+    this.doStuffWithLondonOpenCandles();
+  };
+
+  doStuffWithLondonOpenCandles = () => {
+    let cumRange = 0;
+    let cumCandles = 0;
+    let cumLondonOpenRange = 0;
+    let cumLondonOpenCandles = 0;
+    for (let [k, candlesArr] of this.sorted1HData) {
+      for (let i = 0; i < candlesArr.length; i++) {
+        let candleRange = parseFloat(
+          ((candlesArr[i].High - candlesArr[i].Low) * 10000).toFixed(2)
+        );
+        cumRange += candleRange;
+        cumCandles++;
+
+        if (i >= 10) {
+          cumLondonOpenRange += candleRange;
+          cumLondonOpenCandles++;
+        }
+      }
+    }
+    console.log(
+      `${cumRange / cumCandles}, ${cumLondonOpenRange / cumLondonOpenCandles}`
+    );
   };
 
   PercentCloseGreenRedAfterMovementOfCertainAmt = () => {

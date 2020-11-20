@@ -43,18 +43,10 @@ export class OneHourStore {
     this.sorted1HData = all1HDays;
     console.log(all1HDays);
 
-    this.haveFunWith1HCandles2();
+    this.betAtLeast30PipsOnAnySide();
   };
 
-  haveFunWith1HCandles2 = () => {
-    // let trades = {
-    //   totalDays: 0,
-    //   totalUpDays: 0,
-    //   totalDownDays: 0,
-    //   upAfterDev: 0,
-    //   downAfterDev: 0,
-    // };
-
+  betAtLeast30PipsOnAnySide = () => {
     let trades = {
       totalDays: 0,
       totalUpDays: 0,

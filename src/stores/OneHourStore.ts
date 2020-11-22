@@ -1,4 +1,4 @@
-import { observable, toJS } from "mobx";
+import { observable } from "mobx";
 import { DSVRowArray } from "d3";
 
 interface CandleStick {
@@ -43,7 +43,68 @@ export class OneHourStore {
     this.sorted1HData = all1HDays;
     console.log(all1HDays);
 
-    this.betAtLeast30PipsOnAnySide();
+    // this.betAtLeast30PipsOnAnySide();
+    this.x();
+  };
+
+  x = () => {
+    let stats = {
+      totalDays: 0,
+      totalUpDays: 0,
+      totalDownDays: 0,
+      OLisLarger: 0,
+      OHisLarger: 0,
+      daysWithOHAtLeast40: 0,
+      OHAtLeast40ClosedGreen: 0,
+      OHAtLeast40ClosedRed: 0,
+      OHAtLeast40AverageOH: 0,
+      OHAtLeast40AverageOL: 0,
+    };
+    for (let [date, candles] of this.sorted1HData) {
+      let openPrice = candles[0].Open;
+      let closePrice = candles[candles.length - 1].Close;
+      let lowestPrice = 100;
+      let highestPrice = -100;
+
+      stats.totalDays++;
+      if (closePrice > openPrice) {
+        stats.totalUpDays++;
+      } else {
+        stats.totalDownDays++;
+      }
+      for (let i = 0; i < candles.length; i++) {
+        lowestPrice =
+          candles[i].Low < lowestPrice ? candles[i].Low : lowestPrice;
+        highestPrice =
+          candles[i].High > highestPrice ? candles[i].High : highestPrice;
+      }
+
+      let OH = this.diffInPips(highestPrice, openPrice);
+      let OL = this.diffInPips(openPrice, lowestPrice);
+
+      if (OL < OH) {
+        stats.OHisLarger++;
+      } else {
+        stats.OLisLarger++;
+      }
+
+      if (OH >= 40) {
+        stats.daysWithOHAtLeast40++;
+        stats.OHAtLeast40AverageOH += OH;
+        stats.OHAtLeast40AverageOL += OL;
+        if (closePrice > openPrice) {
+          stats.OHAtLeast40ClosedGreen++;
+        } else {
+          stats.OHAtLeast40ClosedRed++;
+        }
+      }
+    }
+
+    stats.OHAtLeast40AverageOH =
+      stats.OHAtLeast40AverageOH / stats.daysWithOHAtLeast40;
+    stats.OHAtLeast40AverageOL =
+      stats.OHAtLeast40AverageOL / stats.daysWithOHAtLeast40;
+    console.log(stats);
   };
 
   betAtLeast30PipsOnAnySide = () => {
